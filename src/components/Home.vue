@@ -62,7 +62,7 @@ export default {
 
         .image1{
             grid-area: image1;
-            background: url('../assets/images/one.jpg');
+            background: url('../assets/images/fieldImageone.jpeg');
             background-position: center;
             background-size: cover;
         }
@@ -80,7 +80,7 @@ export default {
         }
         .image4{
             grid-area: image4;
-            background: url('../assets/images/four.jpg');
+            background: url('../assets/images/fieldImageTwo.jpeg');
             background-position: center;
             background-size: cover;
         }
@@ -92,7 +92,7 @@ export default {
         }
         .image6{
             grid-area: image6;
-            background: url('../assets/images/six.jpg');
+            background: url('../assets/images/fieldImageThree.jpeg');
             background-position: center;
             background-size: cover;
         }
