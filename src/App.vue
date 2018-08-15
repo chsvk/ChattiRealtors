@@ -12,37 +12,20 @@
                   </div>
                   <div class="nav-wrapper">
                         <ul>
-                              <li><a href="#">Home</a></li>
-                              <li><a href="#">Overview</a></li>
-                              <li><a href="#">Prices</a></li>
-                              <li><a href="#">Purchase</a></li>
+                              <li><a class="active" href="#">Home</a></li>
+                              <li><a href="#">Browse</a></li>
+                              <li><a href="#">Login/Register</a></li>
+                              <li><a href="#">Contact Us</a></li>
                         </ul>
                   </div>
             </nav>
-      <section class="hero">
-        <h1>Chatti Realtors</h1>
-        <h3>Better Investments. Better Profits</h3>
-      </section>
-      <section class="plots">
-        plots will appear here
-      </section>
-      <section class="message">
-        <h2>Sooner The Investment</h2>
-        <h1>Higher The Profits</h1>
-        <a href=""><router-link to="/">Invest Now</router-link></a>
-      </section>
-      <section class="investors">
-        <h1>Looking For Investors?</h1>
-        <h3>Post Your Property</h3>
-        <a href=""><router-link to="/">Post Property</router-link></a>
-      </section>
-      <footer>
-        &copy 2018 Chatti Realtors. Developed By Vamshi Krishna. 
-      </footer>
     <div class="router">
       <!-- <hr> -->
       <router-view/>
     </div>
+    <footer>
+        &copy 2018 Chatti Realtors. Developed By Vamshi Krishna. 
+      </footer>
   </div>
 </template>
 
@@ -63,6 +46,16 @@
     overflow-x: hidden;
   }
 
+  .particles{
+        display: block;
+        position: relative;
+        z-index: 1;
+  }
+
+  .active{
+        border-bottom: 2px solid #AD974f;
+  }
+
 nav {
       overflow:hidden; 
       width: 100%;
@@ -79,7 +72,7 @@ nav {
 }
  
 .logo a {
-      color: #fff;
+      color: #AD974f;
       text-transform: uppercase;
       font-weight: 700;
       font-size: 28px;
@@ -119,32 +112,6 @@ nav ul li a {
 }
 
 
-
-  .hero{
-    overflow-x: hidden;
-    background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('./assets/images/HeroImage.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; 
-    height: 100vh;
-    width: 100vw;
-    h1{
-      position: relative;
-      top: 5em;
-      font-weight: bold;
-      color: white;
-      font-size: 3.5em;
-      text-align: center;
-    }
-    h3{
-      color: white;
-      position: relative;
-      top: 8.3em;
-      font-size: 2.1em;
-      text-align: center;
-    }
-
-  }
  
 
 // FOR SMALLER SCREENS
@@ -157,8 +124,26 @@ nav ul li a {
     padding: 0;
   }
 
-  .hero{
-    width: 105%;
+//   .hero{
+//         position: relative;
+//     width: 105%;
+
+//       h1{
+//             font-size: 2.6em;
+//       }
+
+//       h3{
+//             font-size: 2em;
+//       }
+
+//   }
+
+//   .particles{
+//         display: none;
+//   }
+
+  .logo a{
+        font-size: 22px;
   }
       .logo {
             padding: 0;

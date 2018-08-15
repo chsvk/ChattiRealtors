@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "vue": "^2.5.16",
+    "vue-particles": "^1.0.9",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
