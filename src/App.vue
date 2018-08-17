@@ -23,16 +23,12 @@
       <!-- <hr> -->
       <router-view/>
     </div>
-    <footer>
-        &copy 2018 Chatti Realtors. Developed By Vamshi Krishna. 
-      </footer>
+    
   </div>
 </template>
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,900i');
-
- 
 
   *{
     font-family: 'Roboto', sans-serif;
@@ -40,16 +36,14 @@
     padding: 0;
   }
 
+
+  
+
   #app{
     position: absolute;
     width: 100%;
     overflow-x: hidden;
-  }
-
-  .particles{
-        display: block;
-        position: relative;
-        z-index: 1;
+    height: 100%;
   }
 
   .active{
@@ -124,28 +118,13 @@ nav ul li a {
     padding: 0;
   }
 
-//   .hero{
-//         position: relative;
-//     width: 105%;
-
-//       h1{
-//             font-size: 2.6em;
-//       }
-
-//       h3{
-//             font-size: 2em;
-//       }
-
-//   }
-
-//   .particles{
-//         display: none;
-//   }
-
   .logo a{
+        position: absolute fixed;
+            display: block;
         font-size: 22px;
   }
       .logo {
+            display: block;
             padding: 0;
       }
  

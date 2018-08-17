@@ -19,32 +19,102 @@
         hoverMode="grab"
         :clickEffect="false"
         clickMode="push" class="particles" ></vue-particles>
+        <div class="plotSection">
+        <h1 class="plots_head">Plots In BibiNagar</h1>
       <section class="plots">
-        plots will appear here
+        <article v-for="(plot, idx) in plots" :key="idx">
+         <div class="plot animated fadeInUp">
+             <agile :arrows="false" :dots="false" :speed=250>
+               <div v-for="image in plot.Image" class="slide">
+                 <img :src="image" alt="">
+               </div>
+             </agile>
+             <div class="det">
+             <h3>{{plot.Heading}}</h3>
+             <button class="details">Full Details</button>
+             </div>
+         </div>
+        </article>
       </section>
+      </div>
       <section class="message">
         <h2>Sooner The Investment</h2>
         <h1>Higher The Profits</h1>
-        <a href=""><router-link to="/">Invest Now</router-link></a>
+        <button><router-link to="/"><a>Invest Now</a></router-link></button>
       </section>
       <section class="investors">
+        <div class="detai">
         <h1>Looking For Investors?</h1>
         <h3>Post Your Property</h3>
         <a href=""><router-link to="/">Post Property</router-link></a>
+        </div>
+        <div class="back"></div>
       </section>
-      
+      <footer>
+        <p>&copy 2018 Chatti Realtors. Developed By <a href="imvk.in">Vamshi Krishna.</a> </p>
+      </footer>
     </div>
 </template>
 
 <script>
+import { db } from '../main'
+
+
 export default {
+    name: 'home',
+    components: {
+       
+  },
+    data(){
+        return{
+            plots: [],
+        }
+    },
+    firestore () {
+    return {
+      plots: db.collection('Posts')
+    }
+  }
 
 }
 </script>
 
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700,800,900,900i');
+.content{
+    height: 100vh;
+    width: 100%;
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  line-height: 1.5em;
+}
 
 
+.particles{
+        display: block;
+        position: relative;
+        z-index: 1;
+        height: 100vh;
+  }
+
+  .plotParticles{
+  margin: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  background-image: url("");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  }
+
+  .plotSection{
+    background: #eeeeee;
+  }
 
   .hero{
        
@@ -57,7 +127,7 @@ export default {
     height: 100vh;
     width: 100vw;
     h1{
-           z-index: 2;
+        z-index: 2;
       position: relative;
       top: 45%;
       font-weight: bold;
@@ -76,7 +146,137 @@ export default {
 
   }
 
+  .plots_head{
+          font-family: 'Roboto';
+          font-weight: bold;
+          text-transform: uppercase;
+          padding: 3em 2em 2em 2em;
+          text-align: center;
+          font-size: 2em;
+          letter-spacing: 1.2px;
+          color: #231f20;
+  }
+
+  .plots{
+    width: 95%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-bottom: 3em;
+  }
+
+  .plot{
+    height: 380px;
+    width: 300px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+
+    img{
+      width: 300px;
+      height: 250px;
+    }
+
+    h3{
+      text-align: center;
+    }
+
+    .details{
+      position: absolute;
+      bottom: 0;
+      background: #AD974f;
+      padding: 10px;
+      width: 100%;
+      font-weight: bold;  
+    }
+
+  }
+
+  .plot:hover{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    height: 390px;
+    width: 305px;
+  }
+
+  .message{
+    margin-top: 6em;
+    background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(../assets/images/messageback.jpg);
+    background-attachment: fixed;
+    text-align: center;
+    color: white;
+    padding: 7em;
+
+    h2{
+      font-size: 3em;
+    }
+
+    h1{
+      font-size: 2.7em;
+    }
+
+    button{
+      margin-top: 2em;
+      width: 20em;
+      padding: 0.9em;
+      background: #AD974f;
+      transition: 0.3s;
+      border: none;
+    }
+
+    button:hover{
+      width: 22em;
+    }
+
+    a{
+      text-decoration: none;
+      color: #231f20;
+      font-size: 1.3em;
+    }
+  }
+
+  .investors{
+    margin-top: 6em; 
+    display: grid;
+    grid-template-columns: 50% auto;
+    height: 70%;
+
+    .detai{
+      height: 40%;
+      margin: auto;
+      text-align: center;
+      font-size: 2em;
+
+      a{
+        margin: 3em;
+        text-decoration: none;
+        color: #231f20;
+        font-style: italic;
+        transition: 0.3s;
+      }
+      a:hover{
+        color: black;
+        text-decoration: underline;
+      }
+    }
+
+    .back{
+      background: url('../assets/images/investor.jpg');
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 0 8px 8px white inset;
+    }
+  }
+
+  footer{
+      text-align: center;
+      padding: 1em;
+    }
+
   @media screen and (max-width: 864px) {
+
+  .particles{
+        display: none;
+  }
 
        .hero{
         position: relative;
@@ -89,12 +289,17 @@ export default {
       h3{
             font-size: 2em;
       }
-
-      .particles{
-        display: none;
   }
 
+  .plots{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
+
+  .plot{
+    margin: 2em;
+  }
+     
 
 
   }
