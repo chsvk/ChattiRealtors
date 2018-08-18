@@ -1,5 +1,27 @@
 <template>
     <div class="content">
+      <div id="appp">
+        <nav>
+                  <input type="checkbox" id="nav" class="hidden">
+                  <label for="nav" class="nav-btn">
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                  </label>
+                  <div class="logo">
+                        <a>Chatti Realtors</a>
+                  </div>
+                  <div class="nav-wrapper">
+                        <ul>
+                              <li><a class="active" href="#">Home</a></li>
+                              <li><a href="#">Browse</a></li>
+                              <li><a href="login">Login/Register</a></li>
+                              <li><a href="#">Contact Us</a></li>
+                        </ul>
+                  </div>
+            </nav>
+      </div>
+      
         <section class="hero">
                   <h1>Chatti Realtors</h1>
         <h3>Better Investments. Better Profits</h3>
@@ -84,6 +106,16 @@ export default {
 .content{
     height: 100vh;
     width: 100%;
+}
+
+#app{
+  .logo{
+    margin: 2em;
+  }
+
+  ul{
+    margin: 2em;
+  }
 }
 
 *{

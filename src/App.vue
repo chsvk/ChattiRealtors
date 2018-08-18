@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav>
+    <!-- <nav>
                   <input type="checkbox" id="nav" class="hidden">
                   <label for="nav" class="nav-btn">
                         <i></i>
@@ -8,17 +8,17 @@
                         <i></i>
                   </label>
                   <div class="logo">
-                        <a href="#">Chatti Realtors</a>
+                        <a>Chatti Realtors</a>
                   </div>
                   <div class="nav-wrapper">
                         <ul>
                               <li><a class="active" href="#">Home</a></li>
                               <li><a href="#">Browse</a></li>
-                              <li><a href="#">Login/Register</a></li>
+                              <li><a href="login">Login/Register</a></li>
                               <li><a href="#">Contact Us</a></li>
                         </ul>
                   </div>
-            </nav>
+            </nav> -->
     <div class="router">
       <!-- <hr> -->
       <router-view/>

@@ -7,10 +7,10 @@ import firebase from 'firebase/app'
 import VueAgile from 'vue-agile'
 import 'firebase/firestore'
 
-
 Vue.use(VueParticles)
 Vue.use(VueFire)
 Vue.use(VueAgile)
+
 
 
 firebase.initializeApp({
