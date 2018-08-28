@@ -1,24 +1,5 @@
 <template>
   <div id="app">
-    <!-- <nav>
-                  <input type="checkbox" id="nav" class="hidden">
-                  <label for="nav" class="nav-btn">
-                        <i></i>
-                        <i></i>
-                        <i></i>
-                  </label>
-                  <div class="logo">
-                        <a>Chatti Realtors</a>
-                  </div>
-                  <div class="nav-wrapper">
-                        <ul>
-                              <li><a class="active" href="#">Home</a></li>
-                              <li><a href="#">Browse</a></li>
-                              <li><a href="login">Login/Register</a></li>
-                              <li><a href="#">Contact Us</a></li>
-                        </ul>
-                  </div>
-            </nav> -->
     <div class="router">
       <!-- <hr> -->
       <router-view/>
@@ -26,6 +7,30 @@
     
   </div>
 </template>
+
+<script>
+import firebase from 'firebase'
+import router from './router.js'
+export default {
+      router,
+      mounted(){
+            this.check();
+      },
+      methods: {
+            check: function(){
+                  firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                  //   router.push('/dashboard');
+                } else {
+                  //     router.push('/');
+                    // No user is signed in.
+                }
+                });
+            }
+      }
+}
+</script>
+
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,900i');

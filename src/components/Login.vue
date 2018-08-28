@@ -5,22 +5,22 @@
             <h1>Login</h1>
         </div>
         <div class="formm">
-            <input v-model="username" type="text" placeholder="Username">
+            <input v-model="username" type="text" placeholder="Email Address">
             <input v-model="password" type="password" placeholder="Password">
             <button v-on:click="login">Login</button>
             </div>
-            <p>Login Failed</p>
+            <p>{{error}}</p>
         </div>
     <div class="login">
     <div class="titleImage2">
         <h1>SignUp</h1>
     </div>
         <div class="formm">
-            <input v-model="susername" type="text" placeholder="Username">
+            <input v-model="susername" type="text" placeholder="Email Address">
             <input v-model="spassword" type="password" placeholder="Password">
             <input v-model="rpassword" type="password" placeholder="Repeat Password">
             <div class="bts">
-            <button>SignUp</button>
+            <button @click="register">SignUp</button>
             </div>
         </div>
     </div>
@@ -30,7 +30,9 @@
 <script>
 import firebase from 'firebase'
 import { db } from '../main'
+import router from '../router.js'
 export default {
+    router,
     data(){
         return{
             username: '',
@@ -39,6 +41,7 @@ export default {
             susername: '',
             spassword: '',
             signup: false,
+            error: '',
         }
     },
     methods: {
@@ -46,7 +49,8 @@ export default {
            firebase.auth().signInWithEmailAndPassword(this.username, this.password).then(function(user){
                 firebase.auth().onAuthStateChanged(function(user) {
                 if (user) {
-                    // router.push('/home');
+                    router.push('/dashboard');
+                    console.log("user");
                 } else {
                     // No user is signed in.
                 }
@@ -59,7 +63,34 @@ export default {
             console.log('Error');
             // ...
             });
+        },
+        register: function(){
+            var vm = this;
+            if(this.spassword==this.rpassword){
+            firebase.auth().createUserWithEmailAndPassword(this.susername, this.spassword).then(function(e){
+                firebase.auth().onAuthStateChanged(function(user) {
+                    db.collection("Users").doc(user.uid).set({
+                        email: vm.susername,
+                        name: '',
+                        phone: '',
+                    });
+                if (user) {
+                    router.push('/dashboard');
+                } else {
+                    vm.error = 'Succesfully Registered Please Sign In';
+                }
+                });
+            })
+            .catch(function(error) {
+            // Handle Errors here.
+            vm.error = error.message;
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+            });
+
         }
+    }
     }
 }
 </script>
@@ -110,6 +141,7 @@ export default {
             width: 100%;
             text-decoration: none;
             border-radius: 10px;
+            border: none;
         } 
         input:focus{
             outline: none;

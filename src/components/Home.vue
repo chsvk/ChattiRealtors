@@ -14,9 +14,11 @@
                   <div class="nav-wrapper">
                         <ul>
                               <li><a class="active" href="#">Home</a></li>
-                              <li><a href="#">Browse</a></li>
-                              <li><a href="login">Login/Register</a></li>
+                              <li><a href="#">Products</a></li>
+                              <li v-if="Nouser"><a href="/login">Login/Register</a></li>
+                              <li v-else><a href="/dashboard">DashBoard</a></li>
                               <li><a href="#">Contact Us</a></li>
+                              <li v-if="!Nouser"><a @click="logout" href="#">Logout</a></li>
                         </ul>
                   </div>
             </nav>
@@ -42,7 +44,7 @@
         :clickEffect="false"
         clickMode="push" class="particles" ></vue-particles>
         <div class="plotSection">
-        <h1 class="plots_head">Plots In BibiNagar</h1>
+        <h1 class="plots_head">HMDA Open Plots</h1>
       <section class="plots">
         <article v-for="(plot, idx) in plots" :key="idx">
          <div class="plot animated fadeInUp">
@@ -64,24 +66,16 @@
         <h1>Higher The Profits</h1>
         <button><router-link to="/"><a>Invest Now</a></router-link></button>
       </section>
-      <section class="investors">
-        <div class="detai">
-        <h1>Looking For Investors?</h1>
-        <h3>Post Your Property</h3>
-        <a href=""><router-link to="/">Post Property</router-link></a>
-        </div>
-        <div class="back"></div>
-      </section>
       <footer>
-        <p>&copy 2018 Chatti Realtors. Developed By <a href="imvk.in">Vamshi Krishna.</a> </p>
+        <p>&copy; 2018 Chatti Realtors. Developed By <a href="imvk.in">Vamshi Krishna.</a> </p>
       </footer>
     </div>
 </template>
 
 <script>
 import { db } from '../main'
-
-
+import { functions } from 'firebase';
+import firebase from 'firebase'
 export default {
     name: 'home',
     components: {
@@ -90,11 +84,36 @@ export default {
     data(){
         return{
             plots: [],
+            Nouser: true,
         }
     },
     firestore () {
     return {
       plots: db.collection('Posts')
+    }
+  },
+  mounted(){
+    this.checkUser();
+  },
+  methods:{
+    checkUser: function(){
+      var vm = this;
+      firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        console.log('user exist');
+        vm.Nouser = false; 
+          } else {
+            vm.Nouser = true;
+        console.log('No user');
+      }
+    });
+    },
+    logout: function(){
+      firebase.auth().signOut().then(function() {
+        console.log('Signed Out');
+      }, function(error) {
+        console.error('Sign Out Error', error);
+      });
     }
   }
 
@@ -145,7 +164,7 @@ export default {
   }
 
   .plotSection{
-    background: #eeeeee;
+    background: white;
   }
 
   .hero{
@@ -203,6 +222,7 @@ export default {
     overflow: hidden;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
+    border-radius: 15px;
 
     img{
       width: 300px;
@@ -220,6 +240,8 @@ export default {
       padding: 10px;
       width: 100%;
       font-weight: bold;  
+      border: none;
+      color: white;
     }
 
   }
@@ -253,6 +275,7 @@ export default {
       background: #AD974f;
       transition: 0.3s;
       border: none;
+      border-radius: 5px;
     }
 
     button:hover{

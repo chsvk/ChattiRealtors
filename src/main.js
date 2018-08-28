@@ -14,10 +14,11 @@ Vue.use(VueAgile)
 
 
 firebase.initializeApp({
-  projectId: 'chattirealtors-4ca32',
-  databaseURL: 'https://chattirealtors-4ca32.firebaseio.com',
-  storageBucket: "chattirealtors-4ca32.appspot.com",
-  authDomain: "chattirealtors-4ca32.firebaseapp.com",
+  apiKey: "AIzaSyAsXvSSpzrSOYa_OAHrrWJenk5A4tqQcrA",
+    authDomain: "chattirealtors-4ca32.firebaseapp.com",
+    databaseURL: "https://chattirealtors-4ca32.firebaseio.com",
+    projectId: "chattirealtors-4ca32",
+    storageBucket: "chattirealtors-4ca32.appspot.com",
 })
 export const db = firebase.firestore()
 
