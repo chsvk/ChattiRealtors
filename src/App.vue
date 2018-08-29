@@ -61,6 +61,13 @@ nav {
       z-index: 10;
       position: absolute;
       padding: 8px;
+
+      button{
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2em 0;
+      }
 }
  
 .logo {

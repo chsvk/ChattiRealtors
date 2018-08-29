@@ -15,7 +15,7 @@
                         <ul>
                               <li><a class="active" href="#">Home</a></li>
                               <li><a href="#">Products</a></li>
-                              <li v-if="Nouser"><a href="/login">Login/Register</a></li>
+                              <li v-if="Nouser"><button @click="sendToLogin"><a>Login/Register</a></button></li>
                               <li v-else><a href="/dashboard">DashBoard</a></li>
                               <li><a href="#">Contact Us</a></li>
                               <li v-if="!Nouser"><a @click="logout" href="#">Logout</a></li>
@@ -76,7 +76,9 @@
 import { db } from '../main'
 import { functions } from 'firebase';
 import firebase from 'firebase'
+import router from '../router.js'
 export default {
+    router,
     name: 'home',
     components: {
        
@@ -114,8 +116,12 @@ export default {
       }, function(error) {
         console.error('Sign Out Error', error);
       });
-    }
+    },
+    sendToLogin: function(){
+    router.push('/login');
   }
+  },
+  
 
 }
 </script>
