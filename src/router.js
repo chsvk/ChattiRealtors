@@ -7,6 +7,10 @@ import Dashboard from './components/Dashboard.vue'
 import Enter from './DashBoard/EnterDetails.vue'
 import Space from './DashBoard/Space.vue'
 import AddPlot from './DashBoard/AddPlot.vue'
+import Contact from './components/Contact.vue'
+import Products from './components/Products.vue'
+import BlankSpace from './DashBoard/BlankSpace.vue'
+import FullDetails from './components/FullDetails.vue'
 
 Vue.use(Router)
 
@@ -29,12 +33,28 @@ export default new Router({
       component: Login
     },
     {
+      path: '/contact',
+      name: 'contact',
+      component: Contact
+    },
+    {
+      path: '/products',
+      name: 'products',
+      component: Products
+    },
+    {
+      path: '/full',
+      name: 'fulldetails',
+      component: FullDetails,
+      props: true
+    },
+    {
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
       children: [
         {
-          path: 'space',
+          path: '',
           name: 'space',
           component: Space
         },
@@ -47,6 +67,11 @@ export default new Router({
           path: 'new',
           name: 'addplot',
           component: AddPlot
+        },
+        {
+          path: '/noplots',
+          name: 'noplots',
+          component: BlankSpace
         }
       ]
     },

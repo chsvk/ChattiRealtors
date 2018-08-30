@@ -6,6 +6,19 @@ import VueFire from 'vuefire'
 import firebase from 'firebase/app'
 import VueAgile from 'vue-agile'
 import 'firebase/firestore'
+import 'vue2-dropzone/dist/vue2Dropzone.css'
+import 'vue2-toast/lib/toast.css';
+import Toast from 'vue2-toast';
+import { height } from 'window-size';
+
+
+Vue.use(Toast, {
+    type: 'bottom',
+    duration: 3500,
+    wordWrap: true,
+    width: '600px',
+    height: '200px',
+});
 
 Vue.use(VueParticles)
 Vue.use(VueFire)

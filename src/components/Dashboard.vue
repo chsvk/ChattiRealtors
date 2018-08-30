@@ -13,10 +13,10 @@
                   <div class="nav-wrapper">
                         <ul>
                               <li><a href="/">Home</a></li>
-                              <li><a href="#">Browse</a></li>
-                              <li v-if="Nouser"><a href="/login">Login/Register</a></li>
-                              <li v-else><a  class="active" href="/dashboard">DashBoard</a></li>
-                              <li><a href="#">Contact Us</a></li>
+                              <li><button @click="productsNav"><a>Products</a></button></li>
+                              <li v-if="Nouser"><button @click="sendToLogin"><a>Login/Register</a></button></li>
+                              <li v-else><button @click="dashboardNav"><a class="active">DashBoard</a></button></li>
+                              <li><button @click="contact"><a >Contact Us</a></button></li>
                               <li v-if="!Nouser"><a @click="logout" href="#">Logout</a></li>
                         </ul>
                   </div>
@@ -39,6 +39,8 @@
 import {db} from '../main.js'
 import firebase from 'firebase'
 import router from '../router.js'
+import 'vue2-toast/lib/toast.css'
+import Toast from 'vue2-toast'
 export default {
     router,
     data(){
@@ -70,7 +72,7 @@ export default {
                                         vm.UserName = doc.data().name.split(" ")[0];
                                     }
                                 })
-                                router.push('/dashboard/space');
+                                // router.push('/dashboard/space');
                             }
                         } else {
                             // doc.data() will be undefined in this case
@@ -86,7 +88,9 @@ export default {
                 });
         },
         logout: function(){
+            var vm = this;
             firebase.auth().signOut().then(function() {
+                vm.$toast("You Have Been Signed Out");
                 console.log('Signed Out');
             }, function(error) {
                 console.error('Sign Out Error', error);
@@ -96,6 +100,15 @@ export default {
             router.push('/dashboard/new');
         },
         view: function(){
+            router.push('/dashboard');
+        },
+        contact: function(){
+            router.push('/contact');
+        },
+        productsNav: function(){
+            router.push('/products');
+        },
+        dashboardNav: function(){
             router.push('/dashboard/space');
         }
     }
@@ -107,6 +120,13 @@ export default {
     nav{
         position: relative;
         background: #282828;
+
+        li:first-child{
+            margin-top: 1.5em;
+        }
+        li:last-child{
+            margin-top: 1.5em;
+        }
     }
 
     .adminNav{

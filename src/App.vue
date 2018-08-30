@@ -100,6 +100,11 @@ nav ul li {
 nav ul li:not(:first-child) {
       margin-left: 48px;
 }
+
+nav ul li:first-child {
+      // margin-top: 1.5em;
+      // margin-left: 48px;
+}
  
 nav ul li:last-child {
       margin-right: 60px;
@@ -114,7 +119,8 @@ nav ul li a {
       font-size: 14px;
       letter-spacing: 1.2px;
       font-weight: 600;
-      padding: 1em 0;
+      // padding: 1em 0;
+
 }
 
 

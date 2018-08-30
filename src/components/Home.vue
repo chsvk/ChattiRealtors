@@ -13,11 +13,11 @@
                   </div>
                   <div class="nav-wrapper">
                         <ul>
-                              <li><a class="active" href="#">Home</a></li>
-                              <li><a href="#">Products</a></li>
+                              <li><a class="active" href="/">Home</a></li>
+                              <li><button @click="productsNav"><a>Products</a></button></li>
                               <li v-if="Nouser"><button @click="sendToLogin"><a>Login/Register</a></button></li>
-                              <li v-else><a href="/dashboard">DashBoard</a></li>
-                              <li><a href="#">Contact Us</a></li>
+                              <li v-else><button @click="dashboardNav"><a>DashBoard</a></button></li>
+                              <li><button @click="contact"><a >Contact Us</a></button></li>
                               <li v-if="!Nouser"><a @click="logout" href="#">Logout</a></li>
                         </ul>
                   </div>
@@ -48,7 +48,7 @@
       <section class="plots">
         <article v-for="(plot, idx) in plots" :key="idx">
          <div class="plot animated fadeInUp">
-             <agile :arrows="false" :dots="false" :speed=250>
+             <agile :autoplay="true" :arrows="false" :dots="false" :speed=1000>
                <div v-for="image in plot.Image" class="slide">
                  <img :src="image" alt="">
                </div>
@@ -119,6 +119,15 @@ export default {
     },
     sendToLogin: function(){
     router.push('/login');
+  },
+  contact: function(){
+    router.push('/contact');
+  },
+  productsNav: function(){
+    router.push('/products');
+  },
+  dashboardNav: function(){
+    router.push('/dashboard');
   }
   },
   

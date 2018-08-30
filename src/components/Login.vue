@@ -31,6 +31,9 @@
 import firebase from 'firebase'
 import { db } from '../main'
 import router from '../router.js'
+import 'vue2-toast/lib/toast.css';
+import Toast from 'vue2-toast';
+
 export default {
     router,
     data(){
@@ -46,9 +49,12 @@ export default {
     },
     methods: {
         login: function(){
+            var vm = this;
            firebase.auth().signInWithEmailAndPassword(this.username, this.password).then(function(user){
                 firebase.auth().onAuthStateChanged(function(user) {
                 if (user) {
+                    localStorage.setItem('uid', user.uid);
+                    vm.$toast("Login Succesful.");
                     router.push('/dashboard');
                     console.log("user");
                 } else {
@@ -60,7 +66,8 @@ export default {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            console.log('Error');
+            // vm.error = errorMessage;
+            vm.$toast(errorMessage);
             // ...
             });
         },
@@ -75,9 +82,11 @@ export default {
                         phone: '',
                     });
                 if (user) {
+                    localStorage.setItem('uid', user.uid);
                     router.push('/dashboard');
                 } else {
-                    vm.error = 'Succesfully Registered Please Sign In';
+                    vm.$toast("Registration Succesful. Please Sign IN");
+                    // vm.error = 'Succesfully Registered Please Sign In';
                 }
                 });
             })
@@ -86,10 +95,14 @@ export default {
             vm.error = error.message;
             var errorCode = error.code;
             var errorMessage = error.message;
+            vm.$toast(errorMessage);
             // ...
             });
 
         }
+    },
+    toast: function(){
+        this.$toast('hello');
     }
     }
 }

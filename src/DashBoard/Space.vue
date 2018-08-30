@@ -1,23 +1,21 @@
 <template>
     <div class="space">
-        <div class="noplot" v-if="!plotsExist">
-            <p>No Plots Added</p>
-            <button @click="addNew">Add New Plot</button>
-        </div>
-        <div class="plots" v-else>
-            <article v-for="(plot, idx) in plots" :key="idx">
-            <div class="plot animated fadeInUp">
-             <agile :arrows="false" :dots="false" :speed=250>
-               <div v-for="image in plot.Image" class="slide">
-                 <img :src="image" alt="">
+        <div class="plots">
+            <section class="plots">
+        <article v-for="(plot, idx) in plots" :key="idx">
+         <div class="plot animated fadeInUp">
+             <agile :autoplay="true" :arrows="false" :dots="false" :speed=1000>
+               <div v-for="image in plot.DisplayImages" class="slide">
+                 <img :src="image" alt='No Image Available'>
                </div>
              </agile>
              <div class="det">
              <h3>{{plot.Heading}}</h3>
-             <button class="details">Delete Plot</button>
+             <button @click="details(plot)" class="details">Full Details</button>
              </div>
          </div>
         </article>
+      </section>
         </div>
     </div>
 </template>
@@ -25,73 +23,84 @@
 <script>
 import {db} from '../main'
 import firebase from 'firebase'
+import { functions } from 'firebase';
 import router from '../router.js'
 export default {
     router,
     data(){
         return{
             plots: [],
-            plotsExist: false,
+        }
+    },
+    firestore(){
+        return{
+            plots: db.collection("Users").doc(localStorage.getItem('uid')).collection("Posts")
         }
     },
     mounted(){
-        this.getPlots();
+        
     },
     methods:{
-    //     getPlots(){
-    //         firebase.auth().currentUser.then(function(e){
-    //         db.collection("Users").doc(user.uid).collection("Plots").doc('plot1').set({
-    //             name: 'ello'
-    //         }).then(function(e){
-    //             console.log('set');
-    //         })
-    //         });
-    // }
-    getPlots: function(){
-        this.plotsExist = true;
-        var user = firebase.auth().currentUser;
-        console.log(user);
-        db.collection("Users").doc(user.uid).collection("Plots").get().then(function(snapshot){
-            snapshot.forEach(function(doc){
-                this.plots.push(doc);
-            });
-        });
-        if(this.plots = []){
-            this.plotsExist= false;
+        details: function(plot){
+            router.push({
+                name: 'fulldetails',
+                params: {
+                    plotDetails: plot 
+                }
+            })
         }
-        },
-    
-    addNew: function(){
-        router.push('/dashboard/new');
-    }
     }
 }
 
 </script>
 
 <style lang="scss" scoped>
-
-    .noplot{
-        position: absolute;
-        left: 30%;
-        top: 50%;
-        transform: translateX(-50%);
-        transform: translateY(-50%);
-
-        p{
-            font-style: italic;
-        }
-        button{
-            width: 500px;
-            background: #AD974f;
-            border: none;
-            border-radius: 8px;
-            padding: 1em;
-            margin: 1em;
-            color: white;
-            text-transform: uppercase;
-            cursor: pointer;
-        }
-    }
     
+ .plots{
+    width: 95%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 3em;
+    padding: 2em;
+    grid-gap: 1em;
+  }
+
+  .plot{
+      position: relative;
+    height: 350px;
+    width: 300px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 15px;
+
+    img{
+      width: 300px;
+      height: 250px;
+      font-size: 2em;
+    }
+
+    h3{
+      text-align: center;
+      padding: 1em 0;
+    }
+
+    .details{
+      position: relative;
+      bottom: 0;
+      background: #AD974f;
+      padding: 10px;
+      width: 100%;
+      font-weight: bold;  
+      border: none;
+      color: white;
+    }
+
+  }
+
+  .plot:hover{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
+  }
+
 </style>
