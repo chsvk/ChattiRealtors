@@ -43,8 +43,8 @@ export default new Router({
       component: Products
     },
     {
-      path: '/full',
-      name: 'fulldetails',
+      path: '/fullview',
+      name: 'fullview',
       component: FullDetails,
       props: true
     },
@@ -69,10 +69,10 @@ export default new Router({
           component: AddPlot
         },
         {
-          path: '/noplots',
+          path: 'noplots',
           name: 'noplots',
           component: BlankSpace
-        }
+        },
       ]
     },
   ]

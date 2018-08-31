@@ -110,7 +110,10 @@ export default {
         },
         dashboardNav: function(){
             router.push('/dashboard/space');
-        }
+        },
+        sendToLogin: function(){
+            router.push('/login');
+        },
     }
 }
 </script>

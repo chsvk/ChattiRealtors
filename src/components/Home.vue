@@ -14,7 +14,7 @@
                   <div class="nav-wrapper">
                         <ul>
                               <li><a class="active" href="/">Home</a></li>
-                              <li><button @click="productsNav"><a>Products</a></button></li>
+                              <li><button><a href="#products">Products</a></button></li>
                               <li v-if="Nouser"><button @click="sendToLogin"><a>Login/Register</a></button></li>
                               <li v-else><button @click="dashboardNav"><a>DashBoard</a></button></li>
                               <li><button @click="contact"><a >Contact Us</a></button></li>
@@ -44,18 +44,18 @@
         :clickEffect="false"
         clickMode="push" class="particles" ></vue-particles>
         <div class="plotSection">
-        <h1 class="plots_head">HMDA Open Plots</h1>
+        <h1 id="products" class="plots_head">HMDA Open Plots</h1>
       <section class="plots">
         <article v-for="(plot, idx) in plots" :key="idx">
          <div class="plot animated fadeInUp">
              <agile :autoplay="true" :arrows="false" :dots="false" :speed=1000>
-               <div v-for="image in plot.Image" class="slide">
+               <div v-for="image in plot.DisplayImages" class="slide">
                  <img :src="image" alt="">
                </div>
              </agile>
              <div class="det">
              <h3>{{plot.Heading}}</h3>
-             <button class="details">Full Details</button>
+             <button @click="details(plot)" class="details">Full Details</button>
              </div>
          </div>
         </article>
@@ -128,6 +128,15 @@ export default {
   },
   dashboardNav: function(){
     router.push('/dashboard');
+  },
+  details: function(plot){
+    router.push({
+                name: 'fullview',
+                params: {
+                    plotDetails: plot,
+                    fromDashBoard: false
+                }
+            })
   }
   },
   
@@ -257,14 +266,13 @@ export default {
       font-weight: bold;  
       border: none;
       color: white;
+      cursor: pointer;
     }
 
   }
 
   .plot:hover{
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    height: 390px;
-    width: 305px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.6);
   }
 
   .message{

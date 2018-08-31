@@ -43,9 +43,10 @@ export default {
     methods:{
         details: function(plot){
             router.push({
-                name: 'fulldetails',
+                name: 'fullview',
                 params: {
-                    plotDetails: plot 
+                    plotDetails: plot,
+                    fromDashBoard: true
                 }
             })
         }
@@ -95,6 +96,7 @@ export default {
       font-weight: bold;  
       border: none;
       color: white;
+      cursor: pointer;
     }
 
   }

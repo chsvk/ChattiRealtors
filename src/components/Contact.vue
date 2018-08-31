@@ -21,6 +21,10 @@
                         </ul>
                   </div>
             </nav>
+            <div class="contac">
+              <h4>Call us At:</h4>
+              <p>+91 9849008487</p>
+            </div>
     </div>
 </template>
 
@@ -104,4 +108,30 @@ export default {
       // margin-left: 48px;
 }
 
+nav ul li:last-child {
+      margin-top: 1.5em;
+      // margin-left: 48px;
+}
+
+.contac{
+  position: absolute;
+  left: 30%;
+  transform: translateX(-50%);
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+    transition: 0.3s;
+    border-radius: 15px;
+    padding: 2em;
+    width: 300px;
+    height: 300px;
+
+    h4{
+      margin: 3em;
+    }
+
+    p{
+      margin: 2em;
+    }
+}
 </style>

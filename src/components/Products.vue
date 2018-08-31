@@ -21,14 +21,27 @@
                         </ul>
                   </div>
             </nav>
+
+            <h3>Recommended Plots</h3><hr>
+
     </div>
 </template>
 
 <script>
 import firebase from 'firebase'
 import router from '../router.js'
+import { functions } from 'firebase';
 export default {
     router,
+    data(){
+        return{
+            adminPlots: [],
+            userPlots: []
+        }
+    },
+    firestore(){
+
+    },
     methods: {
         logout: function(){
       firebase.auth().signOut().then(function() {
