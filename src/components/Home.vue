@@ -91,7 +91,7 @@ export default {
     },
     firestore () {
     return {
-      plots: db.collection('Posts')
+      plots: db.collection('AdminPosts')
     }
   },
   mounted(){
