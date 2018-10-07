@@ -21,9 +21,16 @@
                         </ul>
                   </div>
             </nav>
-            <div class="contac">
-              <h4>Call us At:</h4>
-              <p>+91 9849008487</p>
+            <div class="contact">
+              <div class="card">
+                <div class="info">
+                  <h2>We are always available.</h2>
+                  <h4>Give Us a call at:- </h4>
+                  <p>+91 9849008487</p>
+                  <p>+91 9246558487</p>
+                </div>
+                <img src="../assets/images/AlwaysAvailable.jpg" alt="">
+              </div>
             </div>
     </div>
 </template>
@@ -113,25 +120,48 @@ nav ul li:last-child {
       // margin-left: 48px;
 }
 
-.contac{
-  position: absolute;
-  left: 30%;
-  transform: translateX(-50%);
-  top: 50%;
-  transform: translateY(-50%);
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
-    transition: 0.3s;
-    border-radius: 15px;
-    padding: 2em;
-    width: 300px;
+.contact{
+  width: 100vw;
+  height: 100vh;
+  background: url("../assets/images/contactUs.jpeg") no-repeat;
+  background:linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('../assets/images/contactUs.jpeg') no-repeat;
+  background-size: cover;
+  overflow: hidden;
+
+  .card{
+    background: white;
+    display: flex;
+    flex-direction: row;
+    width: 650px;
     height: 300px;
+    position: absolute;
+    left: 25%;
+    top: 33%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
 
-    h4{
-      margin: 3em;
+    .info{
+      width: 70%;
+      h2{
+        padding: 1em;
+      }
+      h4{
+        padding: 1em;
+        margin-left: 2em;
+      }
+      p{
+        padding: 1em;
+        margin-left: 2em;
+      }
     }
 
-    p{
-      margin: 2em;
+    img{
+      height: 300px;
+      width: 40%;
+      background-position: center;
+      background-size:  cover;
+
     }
+  }
 }
 </style>
