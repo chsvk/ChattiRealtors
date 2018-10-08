@@ -39,30 +39,6 @@
             <p>{{error}}</p>
         </div>
         </div>
-
-        <!-- <div class="titleImage">
-            <h1>Login</h1>
-        </div>
-        <div class="formm">
-            <input v-model="username" type="text" placeholder="Email Address">
-            <input v-model="password" type="password" placeholder="Password">
-            <button v-on:click="login">Login</button>
-            </div>
-            <p>{{error}}</p>
-        </div>
-    <div class="login">
-    <div class="titleImage2">
-        <h1>SignUp</h1>
-    </div>
-        <div class="formm">
-            <input v-model="susername" type="text" placeholder="Email Address">
-            <input v-model="spassword" type="password" placeholder="Password">
-            <input v-model="rpassword" type="password" placeholder="Repeat Password">
-            <div class="bts">
-            <button @click="register">SignUp</button>
-            </div>
-        </div>
-    </div> -->
     </div>
     </div>
 </template>
@@ -93,13 +69,14 @@ export default {
             var vm = this;
            firebase.auth().signInWithEmailAndPassword(this.username, this.password).then(function(user){
                 firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
+                if (user && user.emailVerified) {
                     localStorage.setItem('uid', user.uid);
                     vm.$toast("Login Succesful.");
                     router.push('/dashboard');
                     console.log("user");
                 } else {
                     // No user is signed in.
+                    vm.$toast('Please Verify Email To Proceed')
                 }
                 });
             })
@@ -117,14 +94,23 @@ export default {
             if(this.spassword==this.rpassword){
             firebase.auth().createUserWithEmailAndPassword(this.susername, this.spassword).then(function(e){
                 firebase.auth().onAuthStateChanged(function(user) {
+                    var user = firebase.auth().currentUser;
+
+                    user.sendEmailVerification().then(function() {
+                    vm.$toast('Please Verify your Email To Continue')
+                    }).catch(function(error) {
+                    // An error happened.
+                    });
+
                     db.collection("Users").doc(user.uid).set({
                         email: vm.susername,
                         name: '',
                         phone: '',
                     });
+                    vm.toggleForm =!vm.toggleForm;
                 if (user) {
                     localStorage.setItem('uid', user.uid);
-                    router.push('/dashboard');
+                    // router.push('/dashboard');
                 } else {
                     vm.$toast("Registration Succesful. Please Sign IN");
                     // vm.error = 'Succesfully Registered Please Sign In';

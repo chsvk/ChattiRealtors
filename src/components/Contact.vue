@@ -17,7 +17,7 @@
                               <li v-if="Nouser"><button @click="sendToLogin"><a>Login/Register</a></button></li>
                               <li v-else><button @click="dashboardNav"><a>DashBoard</a></button></li>
                               <li><button @click="contact"><a class="active">Contact Us</a></button></li>
-                              <li v-if="!Nouser"><a @click="logout" href="#">Logout</a></li>
+                              <li class="log" v-if="!Nouser"><a @click="logout" href="#">Logout</a></li>
                         </ul>
                   </div>
             </nav>
@@ -58,7 +58,6 @@ export default {
           }
           },
           Nouser: true
-
         }
     },
     components: {
@@ -115,7 +114,7 @@ export default {
       // margin-left: 48px;
 }
 
-nav ul li:last-child {
+    .log {
       margin-top: 1.5em;
       // margin-left: 48px;
 }
