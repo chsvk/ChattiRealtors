@@ -1,280 +1,324 @@
 <template>
   <div id="app">
-    <div class="router">
-      <!-- <hr> -->
-      <router-view/>
-    </div>
-    
+    <nav>
+      <div class="first">
+      <div class="logo">
+        <img @click="navHome" style="cursor: pointer" src="./assets/logo.png" alt="">
+      </div>
+      <i id="menubar" class="fa fa-bars menubar" aria-hidden="true"></i>
+      <nav class="subMenufromMain">
+        <ul>
+          <li><button :class="{active: MainNavState['Home']}" @click="navHome">Home</button></li>
+          <li><button :class="{active: MainNavState['Products']}" @click="navProducts">Products</button></li>
+          <li v-if="!User"><button :class="{active: MainNavState['Authentication']}" @click="navAuth">Login/Register</button></li>
+          <li v-else><button :class="{active: MainNavState['DashBoard']}" @click="navDash">DashBoard</button></li>
+          <li><button :class="{active: MainNavState['Requirement']}" @click="navRequirement">Post Requirement</button></li>
+          <li><button :class="{active: MainNavState['Recruitment']}" @click="navRecruitment">Recruitment</button></li>
+          <li><button :class="{active: MainNavState['Contact']}" @click="navContact">Contact Us</button></li>
+          <li v-if="User"><button @click="logout()">Logout</button></li>
+        </ul>
+      </nav>
+      </div>
+      <hr>
+      <nav class="subMenu">
+        <ul>
+          <li><button @click="navSubHome">Home</button></li>
+          <!-- <li><button @click="navSubProducts">Products</button></li> -->
+          <li v-if="!User"><button @click="navSubAuth">Login/Register</button></li>
+          <li v-else><button @click="navSubDash">DashBoard</button></li>
+          <li><button @click="navSubRequirement">Post Requirement</button></li>
+          <li><button @click="navSubRecruitment">Recruitment</button></li>
+          <li><button @click="navSubContact">Contact Us</button></li>
+          <li v-if="User"><button @click="logout()">Logout</button></li>
+        </ul>
+      </nav>
+    </nav>
+    <router-view class="roter"/>
+    <footer>&copy;Chatti Realtors Developed By <a href="imvk.in">Chsvk</a></footer>
   </div>
 </template>
 
 <script>
+import router from './router'
 import firebase from 'firebase'
-import router from './router.js'
+import {mapState} from 'vuex'
 export default {
-      router,
-      mounted(){
-            this.check();
-      },
-      methods: {
-            check: function(){
-                  firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                  //   router.push('/dashboard');
-                } else {
-                  //     router.push('/');
-                    // No user is signed in.
-                }
-                });
-            }
+  router,
+  data(){
+    return{
+      showMenu: false,
+      User: false,
+    }
+  },
+  computed:{
+    ...mapState(['MainNavState'])
+  },
+  mounted(){
+    var vm = this;
+    document.getElementById('menubar').addEventListener('click', this.toggleMenuDisplay);
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        vm.User = true;
+        localStorage.setItem('uid', user.uid);
+        console.log('User exists');
+      } else {
+        vm.User = false;
+        console.log('No user')
       }
+    });
+  },
+  methods: {
+    toggleMenuDisplay: function(){
+      var style = getComputedStyle(document.querySelector('.subMenu'), null).display;
+        if(style == "none"){
+            document.querySelector('.subMenu').style.display = "block"
+        }else{
+            document.querySelector('.subMenu').style.display = 'none'
+        }
+    },
+    logout: function(){var vm = this;
+      firebase.auth().signOut().then(()=>{
+        vm.$toast('Logged out Succesfully')
+        localStorage.removeItem('uid');
+        router.push('/');
+      }).catch((e)=>{
+        vm.$toast(e.message);
+      })
+    },
+    // Navigation Methods
+    navSubHome: function(){
+      router.push('/');
+      this.toggleMenuDisplay();
+    },
+    navProducts(){
+      router.push('/products');
+    },  
+    navSubProducts(){
+      router.push('/products');
+      this.toggleMenuDisplay();
+    },
+    navSubAuth: function(){
+      router.push('/auth')
+      this.toggleMenuDisplay();
+    },
+    navSubDash: function(){
+      router.push('/user')
+      this.toggleMenuDisplay();
+    },
+    navSubRequirement: function(){
+      router.push('/requirements')
+      this.toggleMenuDisplay();
+    },
+    navSubRecruitment: function(){
+      router.push('/recruitments')
+      this.toggleMenuDisplay();
+    },
+    navSubContact: function(){
+      router.push('/contact');
+      this.toggleMenuDisplay();
+    },
+    navHome: function(){
+      router.push('/');
+    },
+    navAuth: function(){
+      router.push('/auth')
+    },
+    navDash: function(){
+      router.push('/user')
+    },
+    navRequirement: function(){
+      router.push('/requirements')
+    },
+    navRecruitment: function(){
+      router.push('/recruitments')
+    },
+    navContact: function(){
+      router.push('/contact');
+    }
+  }
 }
 </script>
 
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,900i');
-
-  *{
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700');
+*{
+  font-family: 'Poppins', sans-serif;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+button:focus {outline:0;}
+footer{
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.active{
+            border-bottom: 2px solid black;
+          }
+#app{
+  nav{
+    .subMenufromMain{
+      ul{
+        li{
+          .active{
+            border-bottom: 2px solid black;
+          }
+        }
+      }
+    }
   }
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+@media screen and(min-width:300px) {
+    nav{
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      .first{
+        display: flex;
+        justify-content: space-between;
+      }
+      .logo{
+        img{
+          height: 30px;
+          width: auto;
+          padding-top: 0.7em;
+        }
+      }
 
+      .menubar{
+        font-size: 1.5em;
+        margin-top: 0.4em;
+        margin-right: 0.3em;
+      }
 
-  
+      .subMenufromMain{
+        display: none;
+      }
 
-  #app{
-    position: absolute;
-    width: 100%;
-    overflow-x: hidden;
-    height: 100%;
+      .subMenu{
+        display: none;
+      }
+
+      nav{
+        list-style: none;
+        ul{
+          list-style: none;
+          li{
+            text-align: center;
+           button{
+             font-size: 0.8em;
+             padding-top: 0.7em;
+             cursor: pointer;
+             background: none;
+             border: none;
+             margin: 3% 0;
+           }
+          }
+        }
+      }
+    }
+
+    .roter{
+      z-index: 12;
+    }
+
+    footer{
+      padding: 1em;
+      text-align: center;
+      margin-top: 2em;
+      a{
+        text-decoration: none;
+        font-weight: bolder;
+      }
+    }
+}
+
+@media screen and (min-width: 700px) {
+    nav{
+      .menubar{
+        display: none;
+      }
+
+      .logo{
+        img{
+          height: 50px;
+        }
+      }
+
+      .subMenu{
+        display: none;
+      }
+
+      nav{
+        display: none;
+      }
+
+      .subMenufromMain{
+        display: block;
+        ul{
+          margin-left: -2%;
+          li{
+            display: inline;
+            button{
+              font-weight: bold;
+              margin: 0 0.9em;
+              margin-top: 3%;
+              background: none;
+              border: none;
+              transition: 200ms;
+            }
+
+            button:hover{
+              border-bottom: 2px solid lightblue;
+            }
+          }
+        }
+      }
+    }
+}
+
+@media screen and (min-width: 1000px) {
+  nav{
+    .logo{
+      img{
+        height: 70px;
+      }
+    }
+
+    .subMenufromMain{
+      ul{
+        li{
+          button{
+            font-size: 1em;
+            margin-top: 4%;
+          }
+        }
+      }
+    }
   }
-
-  .active{
-        border-bottom: 2px solid #AD974f;
-  }
-
-nav {
-      overflow:hidden; 
-      width: 100%;
-      z-index: 10;
-      position: absolute;
-      padding: 8px;
-
-      button{
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 2em 0;
-      }
-}
- 
-.logo {
-      margin-top: 15px;
-      float: left;
-      padding: 8px;
-      margin-left: 16px;
-}
- 
-.logo a {
-      color: #AD974f;
-      text-transform: uppercase;
-      font-weight: 700;
-      font-size: 28px;
-      letter-spacing: 0px;
-      text-decoration: none;
-      font-style: italic;
-}
- 
-nav ul {
-      margin-top: 12px;
-      float: right;
-}
- 
-nav ul li {
-      display: inline-block;
-      float: left;
-}
- 
-nav ul li:not(:first-child) {
-      margin-left: 48px;
-}
-
-nav ul li:first-child {
-      // margin-top: 1.5em;
-      // margin-left: 48px;
-}
- 
-nav ul li:last-child {
-      margin-right: 60px;
-}
- 
-nav ul li a {
-      display: inline-block;
-      outline: none;
-      color: #fff;
-      text-transform: uppercase;
-      text-decoration: none;
-      font-size: 14px;
-      letter-spacing: 1.2px;
-      font-weight: 600;
-      // padding: 1em 0;
-
 }
 
 
- 
+// Common CSS
 
-// FOR SMALLER SCREENS
+.underbar{
+  width: 0;
+  height: 5px;
+  background: rgba(100,100,200,0);
+  //left: -50px;
+  top: 20px;
+  position: absolute;
+  -webkit-transition: 0.5s ease;
+}
 
-@media screen and (max-width: 864px) {
-
-  *{
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-
-  .logo a{
-        position: absolute fixed;
-            display: block;
-        font-size: 22px;
-  }
-      .logo {
-            display: block;
-            padding: 0;
-      }
- 
-      .nav-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: #fff;
-            opacity: 0;
-            transition: all 0.2s ease;
-      }
- 
-      .nav-wrapper ul {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-      }
- 
-      .nav-wrapper ul li {
-            display: block;
-            float: none;
-            width: 100%;
-            text-align: right;
-            margin-bottom: 10px;
-      }
- 
-      .nav-wrapper ul li:nth-child(1) a {
-            transition-delay: 0.2s;
-      }
- 
-      .nav-wrapper ul li:nth-child(2) a {
-            transition-delay: 0.3s;
-      }
- 
-      .nav-wrapper ul li:nth-child(3) a {
-            transition-delay: 0.4s;
-      }
- 
-      .nav-wrapper ul li:nth-child(4) a {
-            transition-delay: 0.5s;
-      }
- 
-      .nav-wrapper ul li:not(:first-child) {
-            margin-left: 0;
-      }
- 
-      .nav-wrapper ul li a {
-            padding: 10px 24px;
-            opacity: 0;
-            color: #000;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 1.2px;
-            transform: translateX(-20px);
-            transition: all 0.2s ease;
-      }
- 
-      .nav-btn {
-            position: fixed;
-            right: 10px;
-            top: 10px;
-            display: block;
-            width: 48px;
-            height: 48px;
-            cursor: pointer;
-            z-index: 9999;
-            border-radius: 50%;
-      }
- 
-      .nav-btn i {
-            display: block;
-            width: 20px;
-            height: 2px;
-            background: #000;
-            border-radius: 2px;
-      }
- 
-      .nav-btn i:nth-child(1) {
-            margin-top: 16px;
-      }
- 
-      .nav-btn i:nth-child(2) {
-            margin-top: 4px;
-            opacity: 1;
-      }
- 
-      .nav-btn i:nth-child(3) {
-            margin-top: 4px;
-      }
-
-}
- 
-
-// NAV STYLING
-
-#nav:checked + .nav-btn {
-      transform: rotate(45deg);
-}
- 
-#nav:checked + .nav-btn i {
-      background: #000;
-      transition: transform 0.2s ease;
-}
- 
-#nav:checked + .nav-btn i:nth-child(1) {
-      transform: translateY(6px) rotate(180deg);
-}
- 
-#nav:checked + .nav-btn i:nth-child(2) {
-      opacity: 0;
-}
- 
-#nav:checked + .nav-btn i:nth-child(3) {
-      transform: translateY(-6px) rotate(90deg);
-}
- 
-#nav:checked ~ .nav-wrapper {
-      z-index: 9990;
-      opacity: 1;
-}
- 
-#nav:checked ~ .nav-wrapper ul li a {
-      opacity: 1;
-      transform: translateX(0);
-}
- 
-.hidden {
-      display: none;
-}
 
 </style>

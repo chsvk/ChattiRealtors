@@ -1,387 +1,236 @@
 <template>
-    <div class="content">
-      <div id="appp">
-        <nav>
-                  <input type="checkbox" id="nav" class="hidden">
-                  <label for="nav" class="nav-btn">
-                        <i></i>
-                        <i></i>
-                        <i></i>
-                  </label>
-                  <div class="logo">
-                        <a>Chatti Realtors</a>
-                  </div>
-                  <div class="nav-wrapper">
-                        <ul>
-                              <li><a class="active" href="/">Home</a></li>
-                              <li><button><a href="#products">Products</a></button></li>
-                              <li v-if="Nouser"><button @click="sendToLogin"><a>Login/Register</a></button></li>
-                              <li v-else><button @click="dashboardNav"><a>DashBoard</a></button></li>
-                              <li><button @click="contact"><a >Contact Us</a></button></li>
-                              <li v-if="!Nouser"><a @click="logout" href="#">Logout</a></li>
-                        </ul>
-                  </div>
-            </nav>
-      </div>
-      
-        <section class="hero">
-                  <h1>Chatti Realtors</h1>
-        <h3>Better Investments. Better Profits</h3>
-      </section>
-      <vue-particles color="#AD974f"
-        :particleOpacity="0.7"
-        :particlesNumber="30"
-        shapeType="circle"
-        :particleSize="4"
-        linesColor="#dedede"
-        :linesWidth="1"
-        :lineLinked="true"
-        :lineOpacity="0.4"
-        :linesDistance="150"
-        :moveSpeed="3"
-        :hoverEffect="false"
-        hoverMode="grab"
-        :clickEffect="false"
-        clickMode="push" class="particles" ></vue-particles>
-        <div class="plotSection">
-        <h1 id="products" class="plots_head">HMDA Open Plots</h1>
-      <section class="plots">
-        <article v-for="(plot, idx) in plots" :key="idx">
-         <div class="plot animated fadeInUp">
-             <agile :autoplay="true" :arrows="false" :dots="false" :speed=1000>
-               <div v-for="image in plot.DisplayImages" class="slide">
-                 <img :src="image" alt="">
-               </div>
-             </agile>
-             <div class="det">
-             <h3>{{plot.Heading}}</h3>
-             <button @click="details(plot)" class="details">Full Details</button>
-             </div>
-         </div>
-        </article>
-      </section>
-      </div>
-      <section class="message">
-        <h2>Sooner The Investment</h2>
-        <h1>Higher The Profits</h1>
-        <button><router-link to="/"><a>Invest Now</a></router-link></button>
-      </section>
-      <footer>
-        <p>&copy; 2018 Chatti Realtors. Developed By <a href="imvk.in">Vamshi Krishna.</a> </p>
-      </footer>
+    <div class="home">
+        <div class="hero">
+            <img src="../assets/mainHero.jpg" alt="">
+            <h1>Better Investments Better Profits</h1>
+        </div>
+        <div class="minorMenu">
+            <div @click="navPlots()" class="minorItem">
+                <i class="fa fa-building-o" aria-hidden="true"></i>
+                <h3>Open Plots</h3>
+            </div>
+            <div @click="navFlats()" class="minorItem">
+                <i class="fa fa-building" aria-hidden="true"></i>
+                <h3>Apartment-Flats</h3>
+            </div>
+            <div @click="navHouses()" class="minorItem">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <h3>Independent Houses</h3>
+            </div>
+        </div>
+        <div @click="navPlots()" class="widerMenu">
+            <div class="menuItem">
+                <h3>Open Plots</h3>
+                <img src="../assets/openLands.jpg" alt="" srcset="">
+            </div>
+            <div @click="navFlats()" class="menuItem">
+                <h3>Apartment-Flats</h3>
+                <img src="../assets/flats.jpg" alt="" srcset="">
+            </div>
+            <div @click="navHouses()" class="menuItem">
+                <h3>Independent Houses</h3>
+                <img src="../assets/houses.jpg" alt="" srcset="">
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import { db } from '../main'
-import { functions } from 'firebase';
-import firebase from 'firebase'
-import router from '../router.js'
+import {mapState} from 'vuex'
+import router from '../router'
 export default {
     router,
-    name: 'home',
-    components: {
-       
-  },
-    data(){
-        return{
-            plots: [],
-            Nouser: true,
-        }
+    computed:{
+        ...mapState(['MainNavState']),
     },
-    firestore () {
-    return {
-      plots: db.collection('AdminPosts')
-    }
-  },
-  mounted(){
-    this.checkUser();
-  },
-  methods:{
-    checkUser: function(){
-      var vm = this;
-      firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        console.log('user exist');
-        vm.Nouser = false; 
-          } else {
-            vm.Nouser = true;
-        console.log('No user');
-      }
-    });
+    mounted(){
+        this.MainNavState['Home'] = true;
+        console.log(this.MainNavState);
     },
-    logout: function(){
-      firebase.auth().signOut().then(function() {
-        console.log('Signed Out');
-      }, function(error) {
-        console.error('Sign Out Error', error);
-      });
+    beforeDestroy(){
+        this.MainNavState['Home'] = false;
     },
-    sendToLogin: function(){
-    router.push('/login');
-  },
-  contact: function(){
-    router.push('/contact');
-  },
-  productsNav: function(){
-    router.push('/products');
-  },
-  dashboardNav: function(){
-    router.push('/dashboard');
-  },
-  details: function(plot){
-    router.push({
-                name: 'fullview',
-                params: {
-                    plotDetails: plot,
-                    fromDashBoard: false
-                }
+    methods:{
+        navPlots(){
+            router.push('/products')
+        },
+        navFlats(){
+            router.push({
+                name: 'flatList'
             })
-  }
-  },
-  
-
+        },
+        navHouses(){
+            router.push({
+                name: 'houseList'
+            })
+        }
+    }
 }
 </script>
-
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,700,800,900,900i');
-.content{
-    height: 100vh;
-    width: 100%;
+
+@media screen and (min-width: 300px) {
+
+    .home{
+        .hero{
+            background: rgba(0, 0, 0, 1);
+            height: 100vh;
+            position: relative;
+            h1{
+                text-align: center;
+                top: 20%;
+                left: 6.5%;
+                position: absolute;
+                color: white;
+                font-size: 1.78em;
+                -webkit-text-stroke: 0.4px black;
+                left: 2%;
+                right: 2%;
+                margin: auto;
+            }
+            img{
+                width: 200%;
+                height: 500px;
+                background: inear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
+                background-repeat: none;
+                background-size: cover;
+                background-position: center;
+                -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+                mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+      
+            }
+            
+        }
+
+        .minorMenu{
+            top: 50%;
+            left: 0;
+            right: 0;
+            margin: auto;
+            position: absolute;
+            display: block;
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            .minorItem{
+                margin: 0.6em;
+                display: flex;
+                background: white;
+                padding: 0.8em;
+                width: 90%;
+                i{
+                    font-size: 2em;
+                    margin: 0 0.4em;
+                }
+            }
+        }
+
+        .widerMenu {
+            display: none;
+            margin-top: -10%;
+            .menuItem{
+                padding: 1em 0;
+                margin-top: 10%;
+                margin-left: 5%;
+                img{
+                    height: 40%;
+                    width: 90%;
+                    margin-left: 2.5%;
+                }
+
+                h3{
+                    padding: 0.6em;
+                    text-align: center;
+                    text-shadow: 10px 11px 14px rgba(160, 150, 150, 0.54);
+                }
+            }
+        }
+    }
+
 }
 
-#app{
-  .logo{
-    margin: 2em;
-  }
 
-  ul{
-    margin: 2em;
-  }
+@media screen and (min-width: 700px) {
+    .home{
+
+        .hero{
+            height: 70vh;
+            h1{
+                font-size: 2em;
+                top: 35%;
+            }
+            img{
+                width: 100%;
+                height: 98%;
+            }
+        }
+        .minorMenu{
+            display: none;
+        }
+
+        .widerMenu{
+            display: block;
+            margin-left: -1%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            margin-top: 0%;
+            .menuItem{
+                cursor: pointer;
+                padding: 1em;
+                margin: 1em;
+                overflow: hidden;
+                margin-top: 13%;
+                
+                img{
+                    border-radius: 18px;
+                    width: 100%;
+                    height: 78%;
+                    transition: 250ms;
+                }
+
+                h3{
+                    font-size: 1.6em;
+                    margin-bottom: 0.7em;
+                }
+
+                img:hover{
+                    -webkit-box-shadow: 0 12px 18px -6px black;
+                    -moz-box-shadow: 0 12px 18px -6px black;
+                        box-shadow: 0 12px 18px -6px black;
+                    width: 101%;
+                    height: 80%;
+                }
+            }
+        }
+    }
 }
 
-*{
-  padding: 0;
-  margin: 0;
-  line-height: 1.5em;
+@media screen and (min-width: 1000px) {
+    .home{
+        .hero{
+            h1{
+                font-size: 3em;
+            }
+        }
+    }
 }
 
 
-.particles{
-        display: block;
-        position: relative;
-        z-index: 1;
-        height: 100vh;
-  }
-
-  .plotParticles{
-  margin: 0;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  background-image: url("");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 50%;
-  }
-
-  .plotSection{
-    background: white;
-  }
-
-  .hero{
-       
-      position: absolute;
-    overflow-x: hidden;
-    background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../assets/images/HeroImage.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; 
-    height: 100vh;
-    width: 100vw;
-    h1{
-        z-index: 2;
-      position: relative;
-      top: 45%;
-      font-weight: bold;
-      color: white;
-      font-size: 3.5em;
-      text-align: center;
-    }
-    h3{
-      z-index: 2;
-      color: white;
-      position: relative;
-      top: 45%;
-      font-size: 2.1em;
-      text-align: center;
-    }
-
-  }
-
-  .plots_head{
-          font-family: 'Roboto';
-          font-weight: bold;
-          text-transform: uppercase;
-          padding: 3em 2em 2em 2em;
-          text-align: center;
-          font-size: 2em;
-          letter-spacing: 1.2px;
-          color: #231f20;
-  }
-
-  .plots{
-    width: 95%;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    margin-bottom: 3em;
-  }
-
-  .plot{
-    height: 380px;
-    width: 300px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    border-radius: 15px;
-
-    img{
-      width: 300px;
-      height: 250px;
-    }
-
-    h3{
-      text-align: center;
-    }
-
-    .details{
-      position: absolute;
-      bottom: 0;
-      background: #AD974f;
-      padding: 10px;
-      width: 100%;
-      font-weight: bold;  
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
-
-  }
-
-  .plot:hover{
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.6);
-  }
-
-  .message{
-    margin-top: 6em;
-    background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(../assets/images/messageback.jpg);
-    background-attachment: fixed;
-    text-align: center;
-    color: white;
-    padding: 7em;
-
-    h2{
-      font-size: 3em;
-    }
-
-    h1{
-      font-size: 2.7em;
-    }
-
-    button{
-      margin-top: 2em;
-      width: 20em;
-      padding: 0.9em;
-      background: #AD974f;
-      transition: 0.3s;
-      border: none;
-      border-radius: 5px;
-    }
-
-    button:hover{
-      width: 22em;
-    }
-
-    a{
-      text-decoration: none;
-      color: #231f20;
-      font-size: 1.3em;
-    }
-  }
-
-  .investors{
-    margin-top: 6em; 
-    display: grid;
-    grid-template-columns: 50% auto;
-    height: 70%;
-
-    .detai{
-      height: 40%;
-      margin: auto;
-      text-align: center;
-      font-size: 2em;
-
-      a{
-        margin: 3em;
-        text-decoration: none;
-        color: #231f20;
-        font-style: italic;
-        transition: 0.3s;
-      }
-      a:hover{
-        color: black;
-        text-decoration: underline;
-      }
-    }
-
-    .back{
-      background: url('../assets/images/investor.jpg');
-      background-size: cover;
-      background-position: center;
-      box-shadow: 0 0 8px 8px white inset;
-    }
-  }
-
-  footer{
-      text-align: center;
-      padding: 1em;
-    }
-
-  @media screen and (max-width: 864px) {
-
-  .particles{
-        display: none;
-  }
-
-       .hero{
-        position: relative;
-    width: 105%;
-
-      h1{
-            font-size: 2.6em;
-      }
-
-      h3{
-            font-size: 2em;
-      }
-  }
-
-  .plots{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .plot{
-    margin: 2em;
-  }
-     
 
 
-  }
-    
+//  Common CSS
 
+        .card {
+            width: auto;
+            height: auto;
+            /* Add shadows to create the "card" effect */
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+            transition: 0.3s;
+            }
+
+            /* On mouse-over, add a deeper shadow */
+            .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
 </style>
 

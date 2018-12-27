@@ -1,166 +1,123 @@
 <template>
     <div class="contact">
-        <nav>
-                  <input type="checkbox" id="nav" class="hidden">
-                  <label for="nav" class="nav-btn">
-                        <i></i>
-                        <i></i>
-                        <i></i>
-                  </label>
-                  <div class="logo">
-                        <a href="/">Chatti Realtors</a>
-                  </div>
-                  <div class="nav-wrapper">
-                        <ul>
-                              <li><a href="/">Home</a></li>
-                              <li><button @click="productsNav"><a>Products</a></button></li>
-                              <li v-if="Nouser"><button @click="sendToLogin"><a>Login/Register</a></button></li>
-                              <li v-else><button @click="dashboardNav"><a>DashBoard</a></button></li>
-                              <li><button @click="contact"><a class="active">Contact Us</a></button></li>
-                              <li class="log" v-if="!Nouser"><a @click="logout" href="#">Logout</a></li>
-                        </ul>
-                  </div>
-            </nav>
-            <div class="contact">
-              <div class="card">
-                <div class="info">
-                  <h2>We are always available.</h2>
-                  <h4>Give Us a call at:- </h4>
-                  <p>+91 9849008487</p>
-                  <p>+91 9246558487</p>
-                </div>
-                <img src="../assets/images/AlwaysAvailable.jpg" alt="">
-              </div>
+        <div class="fields">
+        <div class="field">
+            <div class="flex">
+                <img src="../assets/phone.png" alt="">
+                <h3>Call us At: </h3>
             </div>
+            <h4>+91 - 9849008487</h4>
+            <h4>+91 - 9246558487</h4>
+        </div>
+        <div class="field">
+            <div class="flex">
+                <img src="../assets/mail.png" alt="">
+                <h3>Email us At: </h3>
+            </div>
+            <h4>bharathch.1994@gmail.com </h4>
+        </div>
+        </div>
     </div>
 </template>
 
 <script>
-import firebase from 'firebase'
-import router from '../router.js'
-import vue2Dropzone from 'vue2-dropzone'
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
-
+import {mapState} from 'vuex'
 export default {
-    data(){
-        return{
-          dropzoneOptions: {
-            url: 'https://httpbin.org/post',
-            Nouser: true,
-            dropOptions: {
-            maxFilesize: 4, // MB
-            maxFiles: 4,
-            chunking: true,
-            chunkSize: 500, // Bytes
-            thumbnailWidth: 150, // px
-            thumbnailHeight: 150,
-            addRemoveLinks: true
-          }
-          },
-          Nouser: true
-        }
-    },
-    components: {
-     vueDropzone: vue2Dropzone
+    computed: {
+        ...mapState(['MainNavState'])
     },
     mounted(){
-    this.checkUser();
-  },
-  methods:{
-    checkUser: function(){
-      var vm = this;
-      firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        console.log('user exist');
-        vm.Nouser = false; 
-          } else {
-            vm.Nouser = true;
-        console.log('No user');
-      }
-    });
+        this.MainNavState['Contact'] = true;
     },
-    logout: function(){
-      firebase.auth().signOut().then(function() {
-        console.log('Signed Out');
-      }, function(error) {
-        console.error('Sign Out Error', error);
-      });
-    },
-    sendToLogin: function(){
-    router.push('/login');
-  },
-  contact: function(){
-    router.push('/contact');
-  },
-  productsNav: function(){
-    router.push('/products');
-  },
-  dashboardNav: function(){
-    router.push('/dashboard');
-  },
-  }
+    beforeDestroy(){
+        this.MainNavState['Contact'] = false;
+    }
 }
 </script>
 
 <style lang="scss" scoped>
 
-    nav{
-      position: relative;
-        background: #282828;
-    }
-
-    nav ul li:first-child {
-      margin-top: 1.5em;
-      // margin-left: 48px;
+*{
+    overflow-x: hidden;
 }
 
-    .log {
-      margin-top: 1.5em;
-      // margin-left: 48px;
-}
-
-.contact{
-  width: 100vw;
-  height: 100vh;
-  background: url("../assets/images/contactUs.jpeg") no-repeat;
-  background:linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('../assets/images/contactUs.jpeg') no-repeat;
-  background-size: cover;
-  overflow: hidden;
-
-  .card{
-    background: white;
+.flex{
+    margin: 1em;
     display: flex;
-    flex-direction: row;
-    width: 650px;
-    height: 300px;
-    position: absolute;
-    left: 25%;
-    top: 33%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-
-    .info{
-      width: 70%;
-      h2{
-        padding: 1em;
-      }
-      h4{
-        padding: 1em;
-        margin-left: 2em;
-      }
-      p{
-        padding: 1em;
-        margin-left: 2em;
-      }
-    }
-
     img{
-      height: 300px;
-      width: 40%;
-      background-position: center;
-      background-size:  cover;
-
+        margin: 0 5%;
     }
-  }
 }
+
+    @media screen and (min-width: 320px) {
+        .contact{
+            height: 92vh;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-image: linear-gradient( rgba(0,0,0,.5), rgba(0,0,0,.8) ),url('../assets/contact.jpeg');
+            color: white;
+            .fields{
+                width: 100%;
+                position: absolute;
+                left: 15%;
+                top: 20%;
+                .field{
+                    display: flex;
+                    flex-direction: column;
+                    padding: 1em;
+                img{
+                    margin-top: 2%;
+                    height: 25px;
+                    width: 25px;
+                }
+                h4{
+                    margin-left: 15%;
+                }
+                h3{
+                    font-size: 1.5em;
+                }
+            }
+            }
+        }
+    }
+
+    @media screen and (min-width: 700px) {
+        .contact{
+            .fields{
+                .field{
+                    .flex{
+                        img{
+                            margin: 0 2%;
+                            height: 35px;
+                            width: 35px;
+                        }
+                    }
+                    h4{
+                        font-size: 1.3em;
+                        margin-left: 10%;
+                    }
+                    h3{
+                        font-size: 2em;
+                    }
+                }
+            }
+        }
+        
+    }
+
+    @media screen and (min-width: 1000px) {
+        .contact{
+            .fields{
+                left: 35%;
+                top: 30%;
+                .field{
+                    h4{
+                        margin-left: 5%;
+                    }
+                }
+            }
+        }
+    }
+
 </style>

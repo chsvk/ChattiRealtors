@@ -1,81 +1,139 @@
 <template>
     <div class="products">
-        <nav>
-                  <input type="checkbox" id="nav" class="hidden">
-                  <label for="nav" class="nav-btn">
-                        <i></i>
-                        <i></i>
-                        <i></i>
-                  </label>
-                  <div class="logo">
-                        <a>Chatti Realtors</a>
-                  </div>
-                  <div class="nav-wrapper">
-                        <ul>
-                              <li><a href="/">Home</a></li>
-                              <li><button @click="productsNav"><a class="active">Products</a></button></li>
-                              <li v-if="Nouser"><button @click="sendToLogin"><a>Login/Register</a></button></li>
-                              <li v-else><button @click="dashboardNav"><a>DashBoard</a></button></li>
-                              <li><button @click="contact"><a>Contact Us</a></button></li>
-                              <li v-if="!Nouser"><a @click="logout" href="#">Logout</a></li>
-                        </ul>
-                  </div>
-            </nav>
-
-            <h3>Recommended Plots</h3><hr>
-
+        <div class="menu">
+            <div class="mobile">
+                <select name="" id="">
+                    <option value="">Select Product</option>
+                    <option @click="loadPlots()" value="">Plots</option>
+                    <option @click="loadFlats()" value="">Flats</option>
+                    <option @click="loadHouses()" value="">Houses</option>
+                </select>
+            </div>
+            <div class="desktop">
+                <ul>
+                    <li><button @click="loadPlots()">Plots</button></li>
+                    <li><button @click="loadFlats()">Flats</button></li>
+                    <li><button @click="loadHouses()">Houses</button></li>
+                </ul>
+            </div>
+        </div>
+        <router-view class="roter"/>
     </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import firebase from 'firebase'
-import router from '../router.js'
-import { functions } from 'firebase';
+import router from '../router'
 export default {
     router,
     data(){
         return{
-            adminPlots: [],
-            userPlots: []
+            products: []
         }
     },
-    firestore(){
-
+    computed: {
+        ...mapState(['MainNavState'])
     },
     methods: {
-        logout: function(){
-      firebase.auth().signOut().then(function() {
-        console.log('Signed Out');
-      }, function(error) {
-        console.error('Sign Out Error', error);
-      });
+        loadPlots(){
+            router.push('/products')
+        },
+        loadFlats(){
+            router.push({
+                name: 'flatList'
+            })
+        },
+        loadHouses(){
+            router.push({
+                name: 'houseList'
+            })
+        }
     },
-        sendToLogin: function(){
-        router.push('/login');
+    mounted(){
+        this.MainNavState['Products'] = true;
     },
-    contact: function(){
-        router.push('/contact');
-    },
-    productsNav: function(){
-        router.push('/products');
-    },
-    dashboardNav: function(){
-        router.push('/dashboard');
-    }
+    beforeDestroy(){
+        this.MainNavState['Products']= false;
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    nav{
-        background: #282828;
+    @media screen and (min-width: 320px){
+        .products{
+            .menu{
+                .mobile{
+                    display: none;
+                    select{
+                        margin: 1em;
+                        width: 80%;
+                        padding: 1em;
+                        option{
+                            width: 80%;
+                            margin: 1em;
+                        }
+                    }
+                }
+                .desktop{
+                    display: none;
+                }
+            }
+             .roter{
+                    margin-top: 2em;
+                }
+        }
     }
-    nav ul li:first-child {
-      margin-top: 1.5em;
-      // margin-left: 48px;
-}
- nav ul li:last-child {
-      margin-top: 1.5em;
-      // margin-left: 48px;
-}
+    @media screen and (min-width: 700px){
+        .products{
+            .menu{
+                .mobile{
+                    display: none;
+                }
+                .desktop{
+                    display: block;
+                    ul{
+                        margin-left: 50%;   
+                        li{
+                            display: inline;
+                            button{
+                                background: none;
+                                border: none;
+                                padding: 0.7em;
+                                font-weight: bold;
+                                margin: 0.6em 0.7em;
+                                cursor: pointer;
+                                font-size: 1em;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 900px) {
+        .products{
+            .menu{
+                .desktop{
+                    ul{
+                        margin-left: 70%;
+                    }
+                }
+            }
+        }
+    }
+    @media screen and (min-width: 1000px) {
+        .products{
+            .menu{
+                .desktop{
+                    ul{
+                        margin-left: 70%;
+                    }
+                }
+            }
+        }
+    }
+
+    
 </style>

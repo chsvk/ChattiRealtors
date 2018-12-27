@@ -1,43 +1,33 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import VueParticles from 'vue-particles'
-import VueFire from 'vuefire'
-import firebase from 'firebase/app'
-import VueAgile from 'vue-agile'
-import 'firebase/firestore'
-import 'vue2-dropzone/dist/vue2Dropzone.css'
+import store from './store'
+import firebase from 'firebase'
 import 'vue2-toast/lib/toast.css';
 import Toast from 'vue2-toast';
-import { height } from 'window-size';
+import VueAgile from 'vue-agile'
 
 
+Vue.use(VueAgile)
 Vue.use(Toast, {
-    type: 'bottom',
-    duration: 3500,
+    type: 'center',
+    duration: 3000,
     wordWrap: true,
-    width: '600px',
-    height: '200px',
+    width: '400px'
 });
 
-Vue.use(VueParticles)
-Vue.use(VueFire)
-Vue.use(VueAgile)
-
-
+Vue.config.productionTip = false
 
 firebase.initializeApp({
-  apiKey: "AIzaSyAsXvSSpzrSOYa_OAHrrWJenk5A4tqQcrA",
+    apiKey: "AIzaSyAsXvSSpzrSOYa_OAHrrWJenk5A4tqQcrA",
     authDomain: "chattirealtors-4ca32.firebaseapp.com",
     databaseURL: "https://chattirealtors-4ca32.firebaseio.com",
     projectId: "chattirealtors-4ca32",
     storageBucket: "chattirealtors-4ca32.appspot.com",
+    messagingSenderId: "522456850017"
 })
-export const db = firebase.firestore()
-
-Vue.config.productionTip = false
-
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
