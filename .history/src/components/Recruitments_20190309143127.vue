@@ -74,7 +74,7 @@ export default {
                 if((vm.first_name=="")||(vm.last_name=="")||(vm.email=="")||(vm.phone=="")||(vm.resumeUrl=="")){
                     alert("Please fill All required Fields")
                 }else[
-                    firebase.firestore().collection('Recruitments').add({
+                    firebase.firestore().collection('Admin').doc('Requests').collection('Recruitments').add({
                         FirstName: vm.first_name,
                         LastName: vm.last_name,
                         Email: vm.email,

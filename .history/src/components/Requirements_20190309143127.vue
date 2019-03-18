@@ -64,7 +64,7 @@ export default {
             if((vm.document.Name=="")|| (vm.document.Email=="") || (vm.document.Location=="") || (vm.document.From=="") || (vm.document.To=="") || (vm.document.Phone=="")){
                 alert('Please Fill All Required Fields')
             }else{
-                firebase.firestore().collection('Requirements').add(vm.document).then(()=>{
+                firebase.firestore().collection('Admin').doc('Requests').collection('Requirements').add(vm.document).then(()=>{
                     vm.$toast("Requirement Sent!. Thank You!")
                 }).catch((e)=>{
                     vm.$toast(e.message);
