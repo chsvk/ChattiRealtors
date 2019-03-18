@@ -1,0 +1,59 @@
+<template>
+    <div class="footer">
+        <ul>
+            <li><router-link to="about">About</router-link></li>
+            <li>Portfolio</li>
+            <li><router-link to="contact">Contact</router-link></li>
+        </ul>        
+        <ul>
+            <li>Open Plots</li>
+            <li>Flats</li>
+            <li>Independent Houses</li>
+        </ul>
+        <ul>
+            <li><a href="https://www.instagram.com/chattirealtors/">Instagram</a></li>
+            <li><a href="https://www.facebook.com/chattirealtors/">Facebook</a></li>
+            <li><a href="">LinkedIn</a></li>
+        </ul>
+    </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style lang="scss" scoped>
+    @media screen and (min-width: 320px) {
+        .footer{
+            background: #263238;
+            display: flex;
+            justify-content: space-around;
+            padding: 1em;
+            margin: 1em 0;
+            color: white;
+
+            ul{
+                li{
+                    font-size: 0.9em;
+                    margin: 0.5em;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 700px) {
+        .footer{
+            padding: 2em;
+
+            ul{
+                li{
+                    font-size: 1.2em;
+                    margin: 1em;
+                }
+            }
+        }
+    }
+</style>
