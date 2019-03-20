@@ -1,7 +1,7 @@
 <template>
     <div class="contact">
         <div @submit.prevent="submitForm()" class="card">
-            <h1>📞 Happy To Help!</h1>
+            <h1>Happy To Help! 📞</h1>
             <input type="text" placeholder="Enter Name" v-model="name">
             <input type="number" placeholder="Enter Mobile" v-model.number="mobile">
             <button @click="submitForm()">Submit</button>

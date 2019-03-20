@@ -33,7 +33,7 @@
             <input type="text" placeholder="Mobile Number" v-model="phone">
             <input type="text" placeholder="E-Mail ID" v-model="email">
             <button v-if="!buttonClicked" @click.once="SubmitRequest()">Submit</button>
-            <p style="padding-top: 1em; text-align:center" v-if="buttonClicked">{{buttonMessage}}</p>
+            <p style="padding: 0.7em" v-if="buttonClicked">{{buttonMessage}}</p>
         </div>
         <h3 style="text-align:center" v-if="noPlot">Sorry This URL is Invalid. Or the Plot You are searching for could have been deleted</h3>
         <div v-else class="details">
@@ -183,9 +183,6 @@ export default {
             var vm = this;
             vm.buttonClicked = true;
             var mail;
-            var timedata = new Date();
-            console.log(String(new Date().toLocaleDateString("en-US")).split('/').join('-'));
-            timedata = timedata.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
             if(vm.user){
                 mail = firebase.auth().currentUser.email;
             }else{
@@ -199,13 +196,11 @@ export default {
                 from: {
                     name: vm.name,
                     email: mail,
-                    phone: vm.phone,
+                    phone: vm.phone
                 },
                 to: {
                     plot: vm.plot
-                },
-                time: timedata,
-                date: String(new Date().toLocaleDateString("en-US")).split('/').join('-')
+                }
                 }).then(()=>{
                     vm.$toast("Request Submitted. You Will Hear from us shortly!")
                     vm.name = "";

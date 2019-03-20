@@ -40,7 +40,6 @@ export default {
             display: flex;
             justify-content: space-around;
             color: white;
-            height: 100%;
 
             ul{
                 padding: 3em 0;

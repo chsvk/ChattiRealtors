@@ -40,11 +40,9 @@ export default {
             display: flex;
             justify-content: space-around;
             color: white;
-            height: 100%;
 
             ul{
                 padding: 3em 0;
-                height: 100%;
                 li{
                     font-size: 0.9em;
                     margin: 0.5em;

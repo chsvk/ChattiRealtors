@@ -14,7 +14,7 @@
 
                 <div class="modal-body">
                     <slot name="body">
-                        <form @submit.prevent.once="SubmitRequest()">
+                        <form @submit.prevent="SubmitRequest()">
                             <input type="text" v-model="name" placeholder="Name">
                             <input v-if="!user" type="text" v-model="email" placeholder="Email">
                             <input type="text" v-model="phone" placeholder="Phone Number">
@@ -32,8 +32,7 @@
             <input type="text" placeholder="Your Name" v-model="name">
             <input type="text" placeholder="Mobile Number" v-model="phone">
             <input type="text" placeholder="E-Mail ID" v-model="email">
-            <button v-if="!buttonClicked" @click.once="SubmitRequest()">Submit</button>
-            <p style="padding-top: 1em; text-align:center" v-if="buttonClicked">{{buttonMessage}}</p>
+            <button @click="SubmitRequest()">Submit</button>
         </div>
         <h3 style="text-align:center" v-if="noPlot">Sorry This URL is Invalid. Or the Plot You are searching for could have been deleted</h3>
         <div v-else class="details">
@@ -55,6 +54,7 @@
                 <VueEasyLightbox
                     :visible="visible"
                     :imgs="DisplayImages"
+                    :index="index"
                     @hide="handleHide()"
                 ></VueEasyLightbox>
             <div class="flex">
@@ -65,7 +65,7 @@
                     <div class="subOne flex">
                         <div>
                             <h3>Length x Breadth: <span>{{plot.Length}} x {{plot.Breadth}}</span></h3>
-                            <h3>Location: <span>{{plot.Location}}</span></h3>
+                            <h3>LOCATION: <span>{{plot.Location}}</span></h3>
                             <h3>Facing: <span>{{plot.Facing}}</span></h3>
                              <h3>Price: <span>{{plot.Price}}</span></h3>
                             <h3>Negotiable?: <span>{{plot.Negotiable}}</span></h3>
@@ -84,11 +84,11 @@
                             <p v-for="(ames,index) in plot.Amenities" :key="index">{{index+1}}. {{ames.ames}}</p>
                         </div>
                         <div class="subTwo">
-                            <h3>Govt. Institutes near Venture</h3>
+                            <h4>Govt. Institutes near Venture</h4>
                             <p v-for="(ames,index) in plot.DevelopmentDetails" :key="index">{{index+1}}. {{ames.value}}</p>
                         </div>
                         <div class="subTwo">
-                            <h3>Upcoming Projects Near Venture</h3>
+                            <h4>Upcoming Projects Near Venture</h4>
                             <p v-for="(ames,index) in plot.upcomingProjects" :key="index">{{index+1}}. {{ames.value}}</p>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                 </div> -->
             </div>
             <div class="seperate">
-                <button v-if="!buttonClicked" class="interestedButton" @click="interested =!interested">Interested</button>
+                <button class="interestedButton" @click="interested =!interested">Interested</button>
             </div>
         </div>
     </div>
@@ -146,9 +146,7 @@ export default {
                 slidesToScroll:1,
                 timingFunction: 'ease',
                 speed: 500
-                },
-            buttonMessage: 'Thanks for Submitting!',
-            buttonClicked: false,
+                }
         }
     },
     mounted(){var vm = this;
@@ -181,31 +179,24 @@ export default {
         },
         SubmitRequest(){
             var vm = this;
-            vm.buttonClicked = true;
             var mail;
-            var timedata = new Date();
-            console.log(String(new Date().toLocaleDateString("en-US")).split('/').join('-'));
-            timedata = timedata.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
             if(vm.user){
                 mail = firebase.auth().currentUser.email;
             }else{
                 mail = vm.email
             }
             if((vm.name == "") || (vm.phone == "")){
-                vm.buttonClicked = false;
                 alert("Please Fill Required Details")
             }else{
                 firebase.firestore().collection("Interested").doc('Posts').collection('Plots').add({
                 from: {
                     name: vm.name,
                     email: mail,
-                    phone: vm.phone,
+                    phone: vm.phone
                 },
                 to: {
                     plot: vm.plot
-                },
-                time: timedata,
-                date: String(new Date().toLocaleDateString("en-US")).split('/').join('-')
+                }
                 }).then(()=>{
                     vm.$toast("Request Submitted. You Will Hear from us shortly!")
                     vm.name = "";
@@ -215,7 +206,6 @@ export default {
                         vm.interested = !vm.interested;
                     }
                 }).catch((e)=>{
-                    vm.buttonClicked = false;
                     vm.$toast(e.message);
                 })
             }
@@ -320,11 +310,9 @@ export default {
                     padding: 1em;
                     h3{
                         margin: 1em;
-                        font-size: 1.2em;
                         span{
                             font-weight: 100;
-                            font-size: 0.9em;
-                            line-height: 40px;
+                            line-height: 1em;
                         }
                     }
                     h4{
@@ -379,11 +367,6 @@ export default {
                 .sectionOne{
                     width: 80vw;
                 }
-                .sectionTwo{
-                    .subTwo{
-                        width: 35%;
-                    }
-                }
                 .plotHeading{
                     font-size: 1.5em;
                 }
@@ -418,9 +401,8 @@ export default {
                         display: block;
                         padding: 1em;
                         border-spacing: 1em;
-                        width: 35%;
-                        height: 400px;
-                        margin-top: 2em;
+                        width: auto;
+                        height: 300px;
                     }
 
                     h3{

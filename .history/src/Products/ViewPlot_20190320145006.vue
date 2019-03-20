@@ -183,9 +183,6 @@ export default {
             var vm = this;
             vm.buttonClicked = true;
             var mail;
-            var timedata = new Date();
-            console.log(String(new Date().toLocaleDateString("en-US")).split('/').join('-'));
-            timedata = timedata.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
             if(vm.user){
                 mail = firebase.auth().currentUser.email;
             }else{
@@ -199,13 +196,11 @@ export default {
                 from: {
                     name: vm.name,
                     email: mail,
-                    phone: vm.phone,
+                    phone: vm.phone
                 },
                 to: {
                     plot: vm.plot
-                },
-                time: timedata,
-                date: String(new Date().toLocaleDateString("en-US")).split('/').join('-')
+                }
                 }).then(()=>{
                     vm.$toast("Request Submitted. You Will Hear from us shortly!")
                     vm.name = "";

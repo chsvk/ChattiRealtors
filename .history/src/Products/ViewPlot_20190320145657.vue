@@ -200,12 +200,12 @@ export default {
                     name: vm.name,
                     email: mail,
                     phone: vm.phone,
+                    time: timedata,
+                    date: String(new Date().toLocaleDateString("en-US")).split('/').join('-')
                 },
                 to: {
                     plot: vm.plot
-                },
-                time: timedata,
-                date: String(new Date().toLocaleDateString("en-US")).split('/').join('-')
+                }
                 }).then(()=>{
                     vm.$toast("Request Submitted. You Will Hear from us shortly!")
                     vm.name = "";

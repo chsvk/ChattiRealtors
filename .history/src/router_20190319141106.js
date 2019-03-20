@@ -38,9 +38,6 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  scrollBehavior() {
-    return { x: 0, y: 0 };
-  },
   base: process.env.BASE_URL,
   routes: [
     {
@@ -139,3 +136,10 @@ export default new Router({
   ]
 })
 
+
+Router.beforeEach(function (to, from, next) { 
+  setTimeout(() => {
+      window.scrollTo(0, 0);
+  }, 100);
+  next();
+});

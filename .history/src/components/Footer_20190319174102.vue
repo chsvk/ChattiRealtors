@@ -2,7 +2,7 @@
     <div class="footer">
         <ul>
             <li><h3>About Us</h3></li>
-            <li><p><router-link to="about">About</router-link></p></li>
+            <!-- <li><p><router-link to="about">About</router-link></p></li> -->
             <!-- <li>Portfolio</li> -->
             <li><router-link to="contact">Contact</router-link></li>
         </ul>        
@@ -40,11 +40,9 @@ export default {
             display: flex;
             justify-content: space-around;
             color: white;
-            height: 100%;
 
             ul{
                 padding: 3em 0;
-                height: 100%;
                 li{
                     font-size: 0.9em;
                     margin: 0.5em;

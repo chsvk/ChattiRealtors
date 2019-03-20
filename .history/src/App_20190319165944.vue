@@ -146,7 +146,7 @@ export default {
 
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,700');
 *{
   font-family: 'Roboto', sans-serif;
   /* poppins-regular - latin */
