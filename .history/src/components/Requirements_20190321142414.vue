@@ -15,14 +15,12 @@
             <h3>Enter Price Range</h3>
                 <div class="price">
                     <div class="flex">
-                        <div class="priceItem">
-                            <input type="number" placeholder="From" v-model="document.From">
-                        </div>
+                        <p>From: *</p>
+                        <input type="number" placeholder="Range" v-model="document.From">
                     </div>
                     <div class="flex second">
-                        <div class="priceItem">
-                            <input type="number" placeholder="To" v-model="document.To">
-                        </div>
+                        <p>To: *</p>
+                        <input type="number" placeholder="Range" v-model="document.To">
                     </div>
                 </div>
             <h3>Enter Phone Number *</h3>
@@ -122,16 +120,6 @@ export default {
                 margin-left: 10%;
 
             }
-
-            .price{
-                display: flex;
-                .priceItem{
-                    margin: 1em;
-                    input{
-                        padding: 0.8em;
-                    }
-                }
-            }
             form{
                 margin-top: 5%;
             }
@@ -140,12 +128,10 @@ export default {
                 border: 1px solid black;
                 background: none;
                 position: relative;
+                left: 5%;
+                right: 0;
                 margin: auto;
                 width: 90%;
-                margin: 1em;
-                padding: 0.8em;
-                color: white;
-                background: #43abc9;
             }
         }
     }

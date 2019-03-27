@@ -27,20 +27,19 @@
             </div>
             </div>
         </transition>
-        
+        <div class="interested">
+            <h3>Interested? </h3>
+            <input type="text" placeholder="Your Name" v-model="name">
+            <input type="text" placeholder="Mobile Number" v-model="phone">
+            <input type="text" placeholder="E-Mail ID" v-model="email">
+            <button v-if="!buttonClicked" @click.once="SubmitRequest()">Submit</button>
+            <p style="padding-top: 1em; text-align:center" v-if="buttonClicked">{{buttonMessage}}</p>
+        </div>
         <h3 style="text-align:center" v-if="noPlot">Sorry This URL is Invalid. Or the Plot You are searching for could have been deleted</h3>
         <div v-else class="details">
             <h1 class="plotHeading">{{plot.Name}}</h1>
                 <img class="mainFrame" v-if="!(DisplayImages[0]=='')" :src="DisplayImages[0]" alt="">
                 <img class="mainFrame" v-else src="../assets/noImage.png" alt="">
-                <div class="interested">
-                    <h3>Interested? </h3>
-                    <input type="text" placeholder="Your Name" v-model="name">
-                    <input type="text" placeholder="Mobile Number" v-model="phone">
-                    <input type="text" placeholder="E-Mail ID" v-model="email">
-                    <button v-if="!buttonClicked" @click.once="SubmitRequest()">Submit</button>
-                    <p style="padding-top: 1em; text-align:center" v-if="buttonClicked">{{buttonMessage}}</p>
-                </div>
                 <h3 class="galleryHead">Gallery</h3>
                 <div @click="show()" class="galleryMinimum">
                     <img :src="image" v-for="image in DisplayImages" alt="">
@@ -252,7 +251,7 @@ export default {
         .plot{
 
             .imageDisplay{
-                display: none;
+
             }
             .whatsapp{
                 position: absolute;
@@ -264,16 +263,7 @@ export default {
                 position: fixed;
             }
             .interested{
-                padding: 2em;
-                h3{
-                    text-align: center;
-                }
-                input{
-                    display: block;
-                    padding: 1em;
-                    margin: 1em;
-                    font-size: 1em;
-                }
+                    display: none;
                 }
             .details{
                 .plotHeading{
@@ -401,7 +391,6 @@ export default {
            }
            .interested{
                display: block;
-               font-size: 0.8em;
            }
 
            .mainFrame{

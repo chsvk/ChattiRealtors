@@ -22,7 +22,7 @@ export default {
         forgotPassword: function(){var vm = this;
             firebase.auth().sendPasswordResetEmail(this.Email).then(function() {
                 vm.$toast("Email Sent!");
-                router.push('/login');
+                router.push('/auth');
             }).catch(function(error) {
                 vm.$toast(error.message);
             });

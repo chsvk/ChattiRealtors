@@ -36,7 +36,7 @@ import House from './DashBoard/House'
 
 Vue.use(Router)
 
-const router = new Router({
+export default new Router({
   mode: 'history',
   scrollBehavior() {
     return { x: 0, y: 0 };
@@ -58,7 +58,7 @@ const router = new Router({
       }
     },
     {
-      path: '/login',
+      path: '/auth',
       component: Auth,
       meta: {
         title: 'Chatti Realtors is the right place to Invest in Properties',
@@ -230,5 +230,3 @@ router.beforeEach((to, from, next) => {
 
   next();
 });
-
-export default router;

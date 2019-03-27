@@ -14,14 +14,15 @@
             <input type="text" placeholder="Enter Location" v-model="document.Location">
             <h3>Enter Price Range</h3>
                 <div class="price">
+                    <h3>Enter Price Range</h3>
                     <div class="flex">
                         <div class="priceItem">
-                            <input type="number" placeholder="From" v-model="document.From">
+                            <input type="number" placeholder="Range" v-model="document.From">
                         </div>
                     </div>
                     <div class="flex second">
                         <div class="priceItem">
-                            <input type="number" placeholder="To" v-model="document.To">
+                            <input type="number" placeholder="Range" v-model="document.To">
                         </div>
                     </div>
                 </div>
@@ -124,7 +125,6 @@ export default {
             }
 
             .price{
-                display: flex;
                 .priceItem{
                     margin: 1em;
                     input{

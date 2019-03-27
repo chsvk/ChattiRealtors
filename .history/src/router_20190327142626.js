@@ -36,7 +36,7 @@ import House from './DashBoard/House'
 
 Vue.use(Router)
 
-const router = new Router({
+export default new Router({
   mode: 'history',
   scrollBehavior() {
     return { x: 0, y: 0 };
@@ -58,7 +58,7 @@ const router = new Router({
       }
     },
     {
-      path: '/login',
+      path: '/auth',
       component: Auth,
       meta: {
         title: 'Chatti Realtors is the right place to Invest in Properties',
@@ -194,7 +194,7 @@ const router = new Router({
 })
 
 // This callback runs before every route change, including on page load.
-router.beforeEach((to, from, next) => {
+Router.beforeEach((to, from, next) => {
   // This goes through the matched routes from last to first, finding the closest route with a title.
   // eg. if we have /some/deep/nested/route and /some, /deep, and /nested have titles, nested's will be chosen.
   const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
@@ -230,5 +230,3 @@ router.beforeEach((to, from, next) => {
 
   next();
 });
-
-export default router;

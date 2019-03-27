@@ -126,7 +126,7 @@ export default {
       router.push('/');
     },
     navAuth: function(){
-      router.push('/login')
+      router.push('/auth')
     },
     navDash: function(){
       router.push('/user')

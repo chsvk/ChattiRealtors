@@ -264,16 +264,7 @@ export default {
                 position: fixed;
             }
             .interested{
-                padding: 2em;
-                h3{
-                    text-align: center;
-                }
-                input{
-                    display: block;
-                    padding: 1em;
-                    margin: 1em;
-                    font-size: 1em;
-                }
+
                 }
             .details{
                 .plotHeading{
@@ -401,7 +392,6 @@ export default {
            }
            .interested{
                display: block;
-               font-size: 0.8em;
            }
 
            .mainFrame{

@@ -58,7 +58,7 @@ const router = new Router({
       }
     },
     {
-      path: '/login',
+      path: '/auth',
       component: Auth,
       meta: {
         title: 'Chatti Realtors is the right place to Invest in Properties',

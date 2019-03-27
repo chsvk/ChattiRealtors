@@ -23,7 +23,7 @@ export default {
 
         }else{
             vm.$toast('Please Login To Continue');
-            router.push('/login');
+            router.push('/auth');
         }
         this.MainNavState['DashBoard'] = true;
     },

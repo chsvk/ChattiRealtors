@@ -16,12 +16,12 @@
                 <div class="price">
                     <div class="flex">
                         <div class="priceItem">
-                            <input type="number" placeholder="From" v-model="document.From">
+                            <input type="number" placeholder="Range" v-model="document.From">
                         </div>
                     </div>
                     <div class="flex second">
                         <div class="priceItem">
-                            <input type="number" placeholder="To" v-model="document.To">
+                            <input type="number" placeholder="Range" v-model="document.To">
                         </div>
                     </div>
                 </div>

@@ -401,7 +401,6 @@ export default {
            }
            .interested{
                display: block;
-               font-size: 0.8em;
            }
 
            .mainFrame{
